@@ -1,0 +1,13 @@
+
+.header {
+  grid-area: h;
+  background-color: green;
+}
+
+.header img {
+  width: 40px;
+  position: absolute;
+  top: 50%;
+  top: 1.5%;
+  left: 4%;
+}

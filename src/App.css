@@ -11,26 +11,4 @@
   grid-gap: 10px;
 }
 
-.header {
-  grid-area: h;
-  background-color: green;
-}
 
-.header img {
-  width: 40px;
-  position: absolute;
-  top: 50%;
-  top: 1.5%;
-  left: 4%;
-}
-.nav {
-  grid-area: n;
-  background-color: burlywood;
-}
-.content {
-  grid-area: c;
-  background-color: cornflowerblue;
-}
-.content img {
-  width: 100%;
-}
