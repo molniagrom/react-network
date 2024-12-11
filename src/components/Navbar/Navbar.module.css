@@ -3,9 +3,9 @@
   background-color: burlywood;
 }
 
-.item{
+.item a{
   color: #fff;
 }
-.item.active{
+.item a.activeLink{
   color: gold;
 }
