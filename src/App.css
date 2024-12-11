@@ -12,7 +12,10 @@
 }
 
 body{
-  background-color: #353535;
+  background: url('https://t4.ftcdn.net/jpg/01/23/60/47/360_F_123604771_IOtdy5cM3yLshKlH01ynRUsvHmbfUvmd.jpg') top / cover no-repeat;
 }
 
-
+.app-wrapper-content {
+  grid-area: c;
+  background-color: cornflowerblue;
+}

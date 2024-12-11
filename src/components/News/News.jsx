@@ -1,5 +1,5 @@
 import React from "react";
-import s from './Navbar.module.css';
+import s from './News.module.css';
 console.log(s);
 
 export const News = (props) => {
