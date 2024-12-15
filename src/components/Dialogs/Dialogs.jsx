@@ -5,10 +5,10 @@ import {Message} from "./Message/Message";
 
 export const Dialogs = (props) => {
 
-    let dialogsElements = props.dialogs
+    let dialogsElements = props.state.dialogs
         .map(d => <DialogItem name={d.name} id={d.id}/>)
 
-    let messageElements = props.messages.map(m => <Message message={m.message}/>)
+    let messageElements = props.state.messages.map(m => <Message message={m.message}/>)
 
     return (<div className={s.dialogs}>
         <div className={s.dialogsItems}>
