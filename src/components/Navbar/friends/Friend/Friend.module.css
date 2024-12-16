@@ -1,0 +1,9 @@
+.friendLogo {
+    width: 2.5em;
+    border-radius: 50%;
+}
+
+.friendTitle {
+    color: white;
+    font-size: 1em;
+}

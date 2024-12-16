@@ -1,0 +1,17 @@
+.friends p {
+    font-size: 25px;
+}
+
+.friends {
+    background-color: chocolate;
+    border-radius: 10px;
+    padding: 0px 25px 5px 25px;
+    color: white;
+}
+
+.containerToFriends {
+    display: flex;
+    flex-direction: row;
+    gap: 6%;
+    transform: translate(-9px, 0px);
+}

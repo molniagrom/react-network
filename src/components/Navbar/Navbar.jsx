@@ -1,10 +1,12 @@
 import React from "react";
 import s from './Navbar.module.css';
 import {NavLink} from "react-router-dom";
+import {Friends} from "./friends/Friends";
 
 console.log(s);
 
-export const Navbar = () => {
+export const Navbar = (props) => {
+    // debugger
     return (
         <nav className={s.nav}>
             <div className={s.item}>
@@ -32,6 +34,8 @@ export const Navbar = () => {
                     Settings
                 </NavLink>
             </div>
+
+            <Friends state={props.state.friends} />
         </nav>
     )
 }

@@ -28,17 +28,10 @@ export let state = {
 
     },
     sidebar: {
-        friends: {
-            avatar: {
-                img1: "https://habrastorage.org/getpro/freelansim/allfiles/152/1520/1520307/acca35376b.png",
-                img2: "https://img.freepik.com/free-photo/androgynous-avatar-non-binary-queer-person_23-2151100203.jpg",
-                img3: "https://img.freepik.com/premium-vector/young-man-anime-style-character-vector-illustration-design-manga-anime-boy_147933-4668.jpg",
-            },
-            nickname: {
-                name1: 'Alena',
-                name2: 'Emily',
-                name3: 'Nastya',
-            }
-        }
+            friends: [
+                {id: 1, avatar: 'https://habrastorage.org/getpro/freelansim/allfiles/152/1520/1520307/acca35376b.png', nickname: 'Alena'},
+                {id: 2, avatar: 'https://avatars.mds.yandex.net/get-shedevrum/11425623/img_02d4a166191b11efb76d9a79ffaf5bd2/orig', nickname: 'Emily'},
+                {id: 3, avatar: 'https://img.freepik.com/premium-vector/young-man-anime-style-character-vector-illustration-design-manga-anime-boy_147933-4668.jpg', nickname: "Nastya"},
+            ],
     },
 }
