@@ -3,14 +3,18 @@
     grid-template-columns: 2fr 10fr;
 }
 
-.dialog{
-
+.dialog {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
 }
 
 .dialogsItems {
     padding: 10px;
     color: white;
-
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .dialogsItems .active {
@@ -19,9 +23,31 @@
 
 .messages {
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
+.messages .myMessage {
+    background-color: #009999;
+    color: white;
+    align-self: flex-end;
+}
+
+.messages .theirMessage {
+    background-color: #007599;
+    color: white;
+    align-self: flex-start;
 }
 
 .messages .message {
- color: white;
+    color: white;
+    display: inline-block;
+    padding: 3px;
+    border-radius: 5px;
+}
+
+.dialogAvatar {
+    width: 25px;
+    border-radius: 50%;
 }
