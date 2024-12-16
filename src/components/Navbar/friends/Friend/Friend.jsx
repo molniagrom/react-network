@@ -3,9 +3,9 @@ import s from "./Friend.module.css";
 
 export const Friend = (props) => {
     return (
-        <div>
+        <div className={s.friend}>
             <img className={s.friendLogo} src={props.avatar} alt="Friend" />
-            <span className={s.friendTitle}>{props.name}</span>
+            <span className={s.friendTitle}>{props.nickname}</span>
         </div>
     )
 }

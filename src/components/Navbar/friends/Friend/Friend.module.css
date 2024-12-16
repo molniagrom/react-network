@@ -7,3 +7,20 @@
     color: white;
     font-size: 1em;
 }
+.friend {
+    display: flex;
+    flex-direction: column;
+    background-color: coral;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    padding: 0.3em;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.friend:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #ff7f50;
+}
