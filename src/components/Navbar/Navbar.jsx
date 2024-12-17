@@ -35,7 +35,7 @@ export const Navbar = (props) => {
                 </NavLink>
             </div>
 
-            <Friends state={props.state.friends} />
+            <Friends state={props.state} />
         </nav>
     )
 }

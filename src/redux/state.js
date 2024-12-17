@@ -25,7 +25,6 @@ export let state = {
             {id: 3, message: 'Cool! How about you?', isMine: true},
             {id: 4, message: 'That\'s fine, too', isMine: false},
         ]
-
     },
     sidebar: {
             friends: [
