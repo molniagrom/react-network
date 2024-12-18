@@ -8,7 +8,6 @@ export let state = {
             {id: 3, message: 'So order it', quantityLike: 3},
             {id: 3, message: 'I\'m lazy', quantityLike: 2},
         ],
-
     },
     dialogsPage: {
         dialogs: [
