@@ -1,16 +1,21 @@
 import React from "react";
 
-export const EnteringMessages = () => {
+export const EnteringMessages = (props) => {
+
     let newMessage = React.createRef()
+
+    let onMessageChange = () => {
+        let messages = newMessage.current.value;
+        props.upDateMessageText(messages);
+    }
+
     let addMessage = () => {
-        // debugger
-        let text = newMessage.current.value;
-        alert(text);
+       props.addMessage()
     }
 
     return (
         <>
-            <textarea ref={newMessage}></textarea>
+            <textarea onChange={onMessageChange} ref={newMessage} value={props.newMessageText}></textarea>
             <button onClick={addMessage}>Add message</button>
         </>
     )

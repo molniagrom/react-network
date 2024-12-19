@@ -2,17 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import {addPost} from "./redux/state";
+import {addMessage, addPost, upDateMessageText, upDatePostText} from "./redux/state";
 import {BrowserRouter} from "react-router-dom";
 
 // addPost("Samurai")
 
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
 export let renderEntireFree = (state) => {
-    const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(
         <React.StrictMode>
             <BrowserRouter>
-                <App state={state} addPost={addPost}/>
+                <App
+                    state={state}
+                    upDatePostText={upDatePostText}
+                    addPost={addPost}
+                    addMessage={addMessage}
+                    upDateMessageText={upDateMessageText}
+                />
             </BrowserRouter>
         </React.StrictMode>
     );

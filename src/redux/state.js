@@ -10,6 +10,7 @@ export let state = {
             {id: 3, message: 'So order it', quantityLike: 3},
             {id: 3, message: 'I\'m lazy', quantityLike: 2},
         ],
+        newPostText: "I'm happier than anyone..."
     },
     dialogsPage: {
         dialogs: [
@@ -25,7 +26,8 @@ export let state = {
             {id: 2, message: 'How are you?', isMine: false},
             {id: 3, message: 'Cool! How about you?', isMine: true},
             {id: 4, message: 'That\'s fine, too', isMine: false},
-        ]
+        ],
+        newMessageText: "I'm a new message"
     },
     sidebar: {
         friends: [
@@ -48,13 +50,58 @@ export let state = {
     },
 }
 
-export let addPost = (postMessage) => {
+window.state = state;
 
+export let addPost = () => {
+    if (state.profilePage.newPostText === '') {
+        return
+    }
     let newPost = {
         id: 5,
-        message: postMessage,
+        message: state.profilePage.newPostText,
         quantityLike: 0,
     };
     state.profilePage.posts.unshift(newPost)
+    state.profilePage.newPostText = '';
     renderEntireFree(state);
 }
+
+export let upDatePostText = (newText) => {
+    state.profilePage.newPostText = newText;
+    renderEntireFree(state);
+}
+
+export let addMessage = () => {
+    if (state.dialogsPage.newMessageText === '') {
+        return
+    }
+
+    let newMessage = {
+        id: state.dialogsPage.messages.length,
+        message: state.dialogsPage.newMessageText,
+        isMine: true
+    }
+
+    state.dialogsPage.messages.push(newMessage)
+    state.dialogsPage.newMessageText = ''
+    renderEntireFree(state);
+}
+
+export let upDateMessageText = (newText) => {
+    state.dialogsPage.newMessageText = newText;
+    renderEntireFree(state);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
