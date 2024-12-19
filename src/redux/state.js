@@ -1,3 +1,5 @@
+import {renderEntireFree} from "../render";
+
 export let state = {
     profilePage: {
         posts: [
@@ -54,4 +56,5 @@ export let addPost = (postMessage) => {
         quantityLike: 0,
     };
     state.profilePage.posts.unshift(newPost)
+    renderEntireFree(state);
 }
