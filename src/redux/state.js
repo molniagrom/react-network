@@ -1,5 +1,6 @@
-import {renderEntireFree} from "../render";
-
+let renderEntireFree = () => {
+    console.log("state  changed")
+}
 export let state = {
     profilePage: {
         posts: [
@@ -90,6 +91,10 @@ export let addMessage = () => {
 export let upDateMessageText = (newText) => {
     state.dialogsPage.newMessageText = newText;
     renderEntireFree(state);
+}
+
+export const subscribe = (observer) => {
+    renderEntireFree = observer
 }
 
 
