@@ -1,10 +1,9 @@
 import reportWebVitals from './reportWebVitals';
-import {state, subscribe} from "./redux/state";
+import {store} from "./redux/state";
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import {addMessage, addPost, upDateMessageText, upDatePostText} from "./redux/state";
 import {BrowserRouter} from "react-router-dom";
 
 // addPost("Samurai")
@@ -17,10 +16,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
             <BrowserRouter>
                 <App
                     state={state}
-                    upDatePostText={upDatePostText}
-                    addPost={addPost}
-                    addMessage={addMessage}
-                    upDateMessageText={upDateMessageText}
+                    upDatePostText={store.upDatePostText.bind(store)}
+                    addPost={store.addPost.bind(store)}
+                    addMessage={store.addMessage.bind(store)}
+                    upDateMessageText={store.upDateMessageText.bind(store)}
                 />
             </BrowserRouter>
         </React.StrictMode>
@@ -28,9 +27,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 }
 
 
-renderEntireFree(state)
+renderEntireFree(store.getState())
 
-subscribe(renderEntireFree)
+store.subscribe(renderEntireFree)
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
