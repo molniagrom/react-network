@@ -10,6 +10,7 @@ export const EnteringMessages = (props) => {
     }
 
     let addMessage = () => {
+        // debugger
        props.addMessage()
     }
 

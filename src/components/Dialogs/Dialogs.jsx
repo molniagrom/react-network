@@ -3,14 +3,13 @@ import s from "./Dialogs.module.css"
 import {DialogItem} from "./DialogItem/DialogsItem";
 import {Message} from "./Message/Message";
 import {EnteringMessages} from "./EnteringMessages/EnteringMessages";
-import {addMessage, upDateMessageText} from "../../redux/state";
 
 export const Dialogs = (props) => {
+// debugger
+    let dialogsElements = props.state.dialogsPage.dialogs
+        .map(d => <DialogItem key={d.id} name={d.name} id={d.id}/>)
 
-    let dialogsElements = props.state.dialogs
-        .map(d => <DialogItem name={d.name} id={d.id}/>)
-
-    let messageElements = props.state.messages.map(m => <Message key={m.id} message={m.message} isMine={m.isMine}/>)
+    let messageElements = props.state.dialogsPage.messages.map(m => <Message key={m.id} message={m.message} isMine={m.isMine}/>)
 
     return (<div className={s.dialogs}>
         <div className={s.dialogsItems}>
@@ -19,7 +18,7 @@ export const Dialogs = (props) => {
         <div className={s.messages}>
             {messageElements}
             <EnteringMessages
-                newMessageText={props.state.newMessageText}
+                newMessageText={props.state.dialogsPage.newMessageText}
                 upDateMessageText={props.upDateMessageText}
                 addMessage={props.addMessage} />
         </div>
