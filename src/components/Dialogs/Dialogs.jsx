@@ -19,8 +19,8 @@ export const Dialogs = (props) => {
             {messageElements}
             <EnteringMessages
                 newMessageText={props.state.dialogsPage.newMessageText}
-                upDateMessageText={props.upDateMessageText}
-                addMessage={props.addMessage} />
+                upDateMessageText={props.store.upDateMessageText}
+                addMessage={props.store.addMessage} />
         </div>
     </div>)
 }

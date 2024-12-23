@@ -1,9 +1,6 @@
-let renderEntireFree = () => {
-    console.log("state  changed")
-}
 
 export let store = {
-    state: {
+    _state: {
         profilePage: {
             posts: [
                 {id: 1, message: 'Hi, how are you?', quantityLike: 19},
@@ -52,39 +49,45 @@ export let store = {
             ],
         },
     },
+    _callSubscriber(){
+        console.log("state  changed")
+    },
     getState() {
-        return this.state
+        // debugger
+        return this._state
     },
     addPost() {
-        if (this.state.profilePage.newPostText === '') {
+        debugger
+        if (this._state.profilePage.newPostText === '') {
             return
         }
         let newPost = {
-            id: this.state.profilePage.posts.length + 1,
-            message: this.state.profilePage.newPostText,
+            id: this._state.profilePage.posts.length + 1,
+            message: this._state.profilePage.newPostText,
             quantityLike: 0,
         };
-        this.state.profilePage.posts.unshift(newPost)
-        this.state.profilePage.newPostText = '';
-        renderEntireFree(this.state);
+        this._state.profilePage.posts.unshift(newPost)
+        this._state.profilePage.newPostText = '';
+        this._callSubscriber(this._state);
     },
     upDatePostText(newText){
-        this.state.profilePage.newPostText = newText;
-        renderEntireFree(this.state);
+        this._state.profilePage.newPostText = newText;
+        this._callSubscriber(this._state);
     },
     addMessage() {
-        if (!this.state.dialogsPage) {
-            console.error('dialogsPage is undefined');
-            return;
-        }
-
-        if (this.state.dialogsPage.newMessageText === '') {
+        // debugger
+        // if (!this._state.dialogsPage) {
+        //     console.error('dialogsPage is undefined');
+        //     return;
+        // }
+debugger
+        if (this._state.dialogsPage.newMessageText === '') {
             return
         }
 
         let newMessage = {
-            id: this.state.dialogsPage.messages.length,
-            message: this.state.dialogsPage.newMessageText,
+            id: this._state.dialogsPage.messages.length,
+            message: this._state.dialogsPage.newMessageText,
             isMine: true
         }
 
@@ -93,18 +96,15 @@ export let store = {
         renderEntireFree(this.state);
     },
     upDateMessageText(newText) {
-        this.state.dialogsPage.newMessageText = newText;
-        renderEntireFree(this.state);
+        this._state.dialogsPage.newMessageText = newText;
+        this._callSubscriber(this._state);
+    },
+    subscribe(observer) {
+        this._callSubscriber = observer
     }
 }
 
-window.store = store;
-
-export const subscribe = (observer) => {
-    renderEntireFree = observer
-}
-
-
+// window._store = _store;
 
 
 
