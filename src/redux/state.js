@@ -2,6 +2,7 @@ let renderEntireFree = () => {
     console.log("state  changed")
 }
 export let state = {
+
     profilePage: {
         posts: [
             {id: 1, message: 'Hi, how are you?', quantityLike: 19},
