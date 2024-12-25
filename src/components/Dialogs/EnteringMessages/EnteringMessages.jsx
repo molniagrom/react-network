@@ -4,14 +4,15 @@ export const EnteringMessages = (props) => {
 
     let newMessage = React.createRef()
 
-    let onMessageChange = () => {
-        let messages = newMessage.current.value;
-        props.upDateMessageText(messages);
-    }
-
     let addMessage = () => {
-       props.addMessage()
-    }
+        props.dispatch({type: "ADD-MESSAGE"});
+    };
+
+    let onMessageChange = (event) => {
+        let text = event.target.value;
+        props.dispatch({type: "UPDATE-NEW-MESSAGE-TEXT", newText: text});
+    };
+
 
     return (
         <>

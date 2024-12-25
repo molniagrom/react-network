@@ -3,7 +3,6 @@ import s from "./Dialogs.module.css"
 import {DialogItem} from "./DialogItem/DialogsItem";
 import {Message} from "./Message/Message";
 import {EnteringMessages} from "./EnteringMessages/EnteringMessages";
-import {addMessage, upDateMessageText} from "../../redux/state";
 
 export const Dialogs = (props) => {
 
@@ -20,8 +19,7 @@ export const Dialogs = (props) => {
             {messageElements}
             <EnteringMessages
                 newMessageText={props.state.newMessageText}
-                upDateMessageText={props.upDateMessageText}
-                addMessage={props.addMessage} />
+                dispatch={props.dispatch}/>
         </div>
     </div>)
 }
