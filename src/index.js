@@ -14,10 +14,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
             <BrowserRouter>
                 <App
                     state={state}
-                    upDatePostText={store.upDatePostText.bind(store)}
-                    addPost={store.addPost.bind(store)}
-                    addMessage={store.addMessage.bind(store)}
-                    upDateMessageText={store.upDateMessageText.bind(store)}
+                    dispatch={store.dispatch.bind(store)}
                 />
             </BrowserRouter>
         </React.StrictMode>

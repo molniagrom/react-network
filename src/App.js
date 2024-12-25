@@ -14,19 +14,26 @@ import {addMessage, state, upDateMessageText, upDatePostText} from "./redux/stat
 const App = (props) => {
 
     return (
-            <div className="app-wrapper">
-                <Header/>
-                <Navbar state={props.state.sidebar}/>
-                <div className="app-wrapper-content">
-                    <Routes>
-                        <Route path="/dialogs/*" element={<Dialogs newMessageText={props.state.dialogsPage.newMessageText} upDateMessageText={props.upDateMessageText} addMessage={props.addMessage} state={props.state.dialogsPage}/>}/>
-                        <Route path="/profile/*" element={<Profile upDatePostText={props.upDatePostText} addPost={props.addPost} profilePage={props.state.profilePage}/>}/>
-                        <Route path="/news/*" element={<News/>}/>
-                        <Route path="/music/*" element={<Music/>}/>
-                        <Route path="/settings/*" element={<Settings/>}/>
-                    </Routes>
-                </div>
+        <div className="app-wrapper">
+            <Header/>
+            <Navbar state={props.state.sidebar}/>
+            <div className="app-wrapper-content">
+                <Routes>
+                    <Route path="/dialogs/*" element={<Dialogs
+                        newMessageText={props.state.dialogsPage.newMessageText}
+                        upDateMessageText={props.upDateMessageText}
+                        addMessage={props.addMessage}
+                        state={props.state.dialogsPage}/>}/>
+                    <Route path="/profile/*" element={<Profile
+                        profilePage={props.state.profilePage}
+                        dispatch={props.dispatch}
+                    />}/>
+                    <Route path="/news/*" element={<News/>}/>
+                    <Route path="/music/*" element={<Music/>}/>
+                    <Route path="/settings/*" element={<Settings/>}/>
+                </Routes>
             </div>
+        </div>
     );
 };
 
