@@ -102,20 +102,24 @@ export let store = {
     dispatch(action) {
         if (action.type === ADD_POST) {
             this._addPost()
+            this._callSubscriber(this._state);
         } else if (action.type === UPDATE_NEW_POST_TEXT) {
             this._upDatePostText(action.newText)
-        } else if (action.type === 'ADD-MESSAGE') {
+            this._callSubscriber(this._state);
+        } else if (action.type === ADD_MESSAGE) {
             this._addMessage()
-        } else if (action.type === 'UPDATE-NEW-MESSAGE-TEXT') {
+            this._callSubscriber(this._state);
+        } else if (action.type === UPDATE_NEW_MESSAGE_TEXT) {
             this._upDateMessageText(action.newText)
+            this._callSubscriber(this._state);
         }
     }
 };
-export const addPostActionCreator = () => ({type: ADD_POST})
-export const addMessageActionCreator = () => ({type: ADD_MESSAGE})
+export const addPostCreator = () => ({type: ADD_POST})
+export const addMessageCreator = () => ({type: ADD_MESSAGE})
 
-export const updateNewPostActionCreator = (text) => ({type: UPDATE_NEW_POST_TEXT, newText: text})
-export const updateMessageActionCreator = (text) => ({type: UPDATE_NEW_MESSAGE_TEXT, newText: text})
+export const updateNewPostCreator = (text) => ({type: UPDATE_NEW_POST_TEXT, newText: text})
+export const updateMessageCreator = (text) => ({type: UPDATE_NEW_MESSAGE_TEXT, newText: text})
 
 window.store = store;
 

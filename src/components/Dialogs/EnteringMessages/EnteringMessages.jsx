@@ -1,23 +1,23 @@
 import React from "react";
-import {addMessageActionCreator, updateMessageActionCreator} from "../../../redux/state";
+import {addMessageCreator, updateMessageCreator} from "../../../redux/state";
 
 export const EnteringMessages = (props) => {
 
     let newMessage = React.createRef()
 
     let addMessage = () => {
-        props.dispatch(addMessageActionCreator());
+        props.dispatch(addMessageCreator());
     };
 
     let onMessageChange = (event) => {
         let text = event.target.value;
-        props.dispatch(updateMessageActionCreator(text));
+        props.dispatch(updateMessageCreator(text));
     };
 
 
     return (
         <>
-            <textarea onChange={onMessageChange} ref={newMessage} value={props.newMessageText}></textarea>
+            <textarea onChange={onMessageChange} ref={newMessage} value={props.newMessageText} placeholder={"Enter your message"}></textarea>
             <button onClick={addMessage}>Add message</button>
         </>
     )
