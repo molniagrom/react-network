@@ -1,16 +1,17 @@
 import React from "react";
+import {addMessageActionCreator, updateMessageActionCreator} from "../../../redux/state";
 
 export const EnteringMessages = (props) => {
 
     let newMessage = React.createRef()
 
     let addMessage = () => {
-        props.dispatch({type: "ADD-MESSAGE"});
+        props.dispatch(addMessageActionCreator());
     };
 
     let onMessageChange = (event) => {
         let text = event.target.value;
-        props.dispatch({type: "UPDATE-NEW-MESSAGE-TEXT", newText: text});
+        props.dispatch(updateMessageActionCreator(text));
     };
 
 

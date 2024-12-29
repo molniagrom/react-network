@@ -1,5 +1,7 @@
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+const ADD_MESSAGE = "ADD-MESSAGE"
+const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT'
 
 export let store = {
     _state: {
@@ -109,9 +111,11 @@ export let store = {
         }
     }
 };
-
 export const addPostActionCreator = () => ({type: ADD_POST})
+export const addMessageActionCreator = () => ({type: ADD_MESSAGE})
+
 export const updateNewPostActionCreator = (text) => ({type: UPDATE_NEW_POST_TEXT, newText: text})
+export const updateMessageActionCreator = (text) => ({type: UPDATE_NEW_MESSAGE_TEXT, newText: text})
 
 window.store = store;
 
