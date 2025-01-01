@@ -8,9 +8,10 @@ import {Route, Routes} from "react-router-dom";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
-import {store} from "./redux/state";
+import {store} from "./redux/store";
 
 const App = (props) => {
+     debugger
     return (<div className="app-wrapper">
             <Header/>
             <Navbar state={props.state.sidebar}/>
