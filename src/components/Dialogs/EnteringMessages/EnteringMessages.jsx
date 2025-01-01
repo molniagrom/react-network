@@ -1,5 +1,5 @@
 import React from "react";
-import {addMessageCreator, updateMessageCreator} from "../../../redux/state";
+import {addMessageCreator, updateMessageCreator} from "../../../redux/dialogs-reduser";
 
 export const EnteringMessages = (props) => {
 

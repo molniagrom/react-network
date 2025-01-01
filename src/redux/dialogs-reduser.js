@@ -24,3 +24,6 @@ const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT'
 
      return state;
 }
+
+export const addMessageCreator = () => ({type: ADD_MESSAGE})
+export const updateMessageCreator = (text) => ({type: UPDATE_NEW_MESSAGE_TEXT, newText: text})

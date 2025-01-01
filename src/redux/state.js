@@ -1,11 +1,7 @@
 import {profileReducer} from "./profile-reduser";
 import {sidebarReducer} from "./sidebar-reduser";
 import {dialogReducer} from "./dialogs-reduser";
-const ADD_POST = "ADD-POST";
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
-const ADD_MESSAGE = "ADD-MESSAGE"
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT'
-// перенести actionType в
+
 
 export let store = {
     _state: {
@@ -76,11 +72,6 @@ export let store = {
         this._callSubscriber(this._state);
     }
 };
-export const addPostCreator = () => ({type: ADD_POST})
-export const addMessageCreator = () => ({type: ADD_MESSAGE})
-
-export const updateNewPostCreator = (text) => ({type: UPDATE_NEW_POST_TEXT, newText: text})
-export const updateMessageCreator = (text) => ({type: UPDATE_NEW_MESSAGE_TEXT, newText: text})
 
 window.store = store;
 
