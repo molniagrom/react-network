@@ -7,8 +7,11 @@ import App from './App';
 import {BrowserRouter} from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
- debugger
+ // debugger
 let renderEntireFree = (state) => {
+
+    console.log("Current store:", store);
+
     root.render(
         <React.StrictMode>
             <BrowserRouter>

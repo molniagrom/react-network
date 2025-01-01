@@ -7,6 +7,10 @@ console.log(s);
 
 export const Navbar = (props) => {
     // debugger
+
+    console.log("Navbar props:", props);
+
+
     return (
         <nav className={s.nav}>
             <div className={s.item}>
