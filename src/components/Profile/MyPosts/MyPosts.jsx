@@ -1,9 +1,7 @@
 import React from "react";
 import s from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
-import {addPostCreator, updateNewPostCreator} from "../../../redux/profile-reduser";
-
-
+import {addPostCreator} from "../../../redux/profile-reduser";
 
 export const MyPosts = (props) => {
 
@@ -18,9 +16,8 @@ export const MyPosts = (props) => {
 
     let onPostChange = () => {
         let text = newPostElement.current.value;
-        // props.upDatePostText(text);
-        let action = updateNewPostCreator(text)
-        props.dispatch(action);
+        props.upDatePostText(text);
+
     }
 
     return (<div className={s.postsBlock}>
