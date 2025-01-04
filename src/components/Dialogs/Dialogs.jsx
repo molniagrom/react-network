@@ -5,21 +5,26 @@ import {Message} from "./Message/Message";
 import {EnteringMessages} from "./EnteringMessages/EnteringMessages";
 
 export const Dialogs = (props) => {
-
+    // debugger
     let dialogsElements = props.state.dialogs
-        .map(d => <DialogItem name={d.name} id={d.id}/>)
+        .map(d => <DialogItem name={d.name} id={d.id} key={d.id}/>);
 
-    let messageElements = props.state.messages.map(m => <Message key={m.id} message={m.message} isMine={m.isMine}/>)
+    let messageElements = props.state.messages.map(m => <Message key={m.id} message={m.message} isMine={m.isMine}/>);
 
-    return (<div className={s.dialogs}>
-        <div className={s.dialogsItems}>
-            {dialogsElements}
+    return (
+        <div className={s.dialogs}>
+            <div className={s.dialogsItems}>
+                {dialogsElements}
+            </div>
+            <div className={s.messages}>
+                {messageElements}
+                <EnteringMessages
+                    upDateNewMessageBody={props.upDateNewMessageBody}
+                    newMessageText={props.state.newMessageText}
+                    dispatch={props.dispatch}
+                    addMessage={props.addMessage}
+                />
+            </div>
         </div>
-        <div className={s.messages}>
-            {messageElements}
-            <EnteringMessages
-                newMessageText={props.state.newMessageText}
-                dispatch={props.dispatch}/>
-        </div>
-    </div>)
-}
+    )
+};

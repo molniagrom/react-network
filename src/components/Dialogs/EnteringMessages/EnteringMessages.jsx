@@ -1,19 +1,20 @@
 import React from "react";
-import {addMessageCreator, updateMessageCreator} from "../../../redux/dialogs-reduser";
 
 export const EnteringMessages = (props) => {
-
-    let newMessage = React.createRef()
+    let newMessage = React.createRef();
 
     let addMessage = () => {
-        props.dispatch(addMessageCreator());
+        props.addMessage();
     };
 
     let onMessageChange = (event) => {
         let text = event.target.value;
-        props.dispatch(updateMessageCreator(text));
+        if (props.upDateNewMessageBody) { // Проверка на наличие функции
+            props.upDateNewMessageBody(text);
+        } else {
+            console.error("upDateNewMessageBody is not a function");
+        }
     };
-
 
     return (
         <>
@@ -21,4 +22,4 @@ export const EnteringMessages = (props) => {
             <button onClick={addMessage}>Add message</button>
         </>
     )
-}
+};
