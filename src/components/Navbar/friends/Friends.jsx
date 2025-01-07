@@ -1,13 +1,12 @@
-import s from "./Friends.module.css";
 import React from "react";
-import {Friend} from "./Friend/Friend";
+import s from "./Friends.module.css";
+import { Friend } from "./Friend/Friend";
 
 export const Friends = (props) => {
-// debugger
 
-    let friendsElements = props.state.friends.map( f =>
-        <Friend id={f.id} key={f.id} avatar={f.avatar} nickname={f.nickname}/>
-    );
+    let friendsElements = props.state.map(f => (
+        <Friend id={f.id} key={f.id} avatar={f.avatar} nickname={f.nickname} />
+    ));
 
     return (
         <div className={s.friends}>
@@ -16,5 +15,5 @@ export const Friends = (props) => {
                 {friendsElements}
             </div>
         </div>
-    )
-}
+    );
+};

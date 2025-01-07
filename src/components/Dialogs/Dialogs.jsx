@@ -6,10 +6,12 @@ import {EnteringMessages} from "./EnteringMessages/EnteringMessages";
 
 export const Dialogs = (props) => {
     // debugger
-    let dialogsElements = props.state.dialogs
-        .map(d => <DialogItem name={d.name} id={d.id} key={d.id}/>);
 
-    let messageElements = props.state.messages.map(m => <Message key={m.id} message={m.message} isMine={m.isMine}/>);
+    let state = props.dialogsPage
+
+    let dialogsElements = state.dialogs.map(d => <DialogItem name={d.name} id={d.id} key={d.id}/>);
+    let messageElements = state.messages.map(m => <Message key={m.id} message={m.message} isMine={m.isMine}/>);
+
 
     return (
         <div className={s.dialogs}>

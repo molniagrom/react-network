@@ -18,7 +18,10 @@ export const EnteringMessages = (props) => {
 
     return (
         <>
-            <textarea onChange={onMessageChange} ref={newMessage} value={props.newMessageText} placeholder={"Enter your message"}></textarea>
+            <textarea onChange={onMessageChange}
+                      ref={newMessage}
+                      value={props.newMessageText}
+                      placeholder={"Enter your message"}></textarea>
             <button onClick={addMessage}>Add message</button>
         </>
     )
