@@ -22,7 +22,7 @@ export const Dialogs = (props) => {
                 {messageElements}
                 <EnteringMessages
                     upDateNewMessageBody={props.upDateNewMessageBody}
-                    newMessageText={props.state.newMessageText}
+                    newMessageText={state.newMessageText}
                     dispatch={props.dispatch}
                     addMessage={props.addMessage}
                 />

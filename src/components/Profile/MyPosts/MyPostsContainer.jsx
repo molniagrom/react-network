@@ -3,8 +3,7 @@ import {addPostCreator, updateNewPostCreator} from "../../../redux/profile-redus
 import {MyPosts} from "./MyPosts";
 import {StoreContext} from "../../../StoreContext";
 
-export const MyPostsContainer = (props) => {
-    // debugger
+export const MyPostsContainer = () => {
     return (
         <StoreContext.Consumer>
             {

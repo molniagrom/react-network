@@ -5,28 +5,28 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import {BrowserRouter} from "react-router-dom";
-import {StoreContext} from "./StoreContext";
+import {Provider} from "./StoreContext";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-let renderEntireFree = (state) => {
+let renderEntireFree = () => {
 
     console.log("Current store:", store);
 
     root.render(
         <React.StrictMode>
             <BrowserRouter>
-                <StoreContext.Provider value={store}>
+                <Provider store={store}>
                     <App/>
-                </StoreContext.Provider>
+                </Provider>
             </BrowserRouter>
         </React.StrictMode>
     );
 }
 
-renderEntireFree(store.getState())
+renderEntireFree()
 
 store.subscribe(() => {
-    renderEntireFree(store.getState());
+    renderEntireFree();
 })
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
