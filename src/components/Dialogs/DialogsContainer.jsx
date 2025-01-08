@@ -19,7 +19,6 @@ export const DialogsContainer = () => {
                     store.dispatch(updateMessageCreator(text));
                 };
 
-
                 return <Dialogs
                     upDateNewMessageBody={onMessageChange}
                     state={store.getState()}
