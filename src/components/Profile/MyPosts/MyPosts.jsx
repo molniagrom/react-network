@@ -14,7 +14,6 @@ export const MyPosts = (props) => {
     let onPostChange = () => {
         let text = newPostElement.current.value;
         props.upDatePostText(text);
-
     }
 
     return (<div className={s.postsBlock}>

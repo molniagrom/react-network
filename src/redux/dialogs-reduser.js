@@ -23,7 +23,7 @@ let initialState =  {
  export const dialogReducer = (state = initialState, action) => {
 
      switch (action.type) {
-         case ADD_MESSAGE: // this._addMessage()
+         case ADD_MESSAGE:
              if (state.newMessageText === '') {
                  return state;
              }
@@ -37,7 +37,7 @@ let initialState =  {
                  messages: [...state.messages, newMessage],
                  newMessageText: "",
              }
-         case UPDATE_NEW_MESSAGE_TEXT: // this._upDateMessageText(action.newText)
+         case UPDATE_NEW_MESSAGE_TEXT:
              return {
                  ...state,
                  newMessageText: action.newText,
