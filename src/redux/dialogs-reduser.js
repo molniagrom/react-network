@@ -1,7 +1,7 @@
 const ADD_MESSAGE = "ADD-MESSAGE"
 const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT'
 
-let initialState =  {
+export let initialState =  {
         dialogs: [
             {id: 1, name: 'Alena'},
             {id: 2, name: 'Emily'},
