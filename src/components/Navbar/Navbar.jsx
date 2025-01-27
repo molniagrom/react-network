@@ -47,6 +47,14 @@ export const Navbar = (props) => {
                     Settings
                 </NavLink>
             </div>
+            <div className={s.item}>
+                <NavLink
+                    to="/users"
+                    className={({ isActive }) => isActive ? `${s.item} ${s.activeLink}` : s.item}
+                >
+                    Users
+                </NavLink>
+            </div>
             {/* Передаём список друзей в компонент Friends */}
             <Friends state={props.friends} />
         </nav>
