@@ -8,3 +8,7 @@
     font-weight: bold;
 
 }
+
+.pagination span {
+    cursor: pointer;
+}
