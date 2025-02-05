@@ -10,7 +10,7 @@ import {
 } from "../../redux/users-reduser";
 import axios from "axios";
 import {Users} from "./Users";
-import { ReactComponent as Preloader } from "../../assets/images/Gear@1x-0.7s-200px-200px.svg";
+import {Preloader} from "../common/Preloader/Preloader";
 
 export class UsersAPIComponent extends React.Component {
 
@@ -19,7 +19,7 @@ export class UsersAPIComponent extends React.Component {
 
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
             .then((response) => {
-                this.props.toggleIsFetchingAC(true)
+                this.props.toggleIsFetchingAC(false)
                 this.props.setUsers(response.data.items);
                 this.props.setTotalUsersCount(response.data.totalCount);
             })
@@ -31,7 +31,7 @@ export class UsersAPIComponent extends React.Component {
 
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
             .then((response) => {
-                this.props.toggleIsFetchingAC(true)
+                this.props.toggleIsFetchingAC(false)
                 this.props.setUsers(response.data.items);
             })
     }
@@ -39,7 +39,6 @@ export class UsersAPIComponent extends React.Component {
     render() {
         return <>
             {this.props.isFetching ? <Preloader /> : null}
-
             <Users totalUsersCount={this.props.totalUsersCount}
                       onPageChanged={this.onPageChanged}
                       pageSize={this.props.pageSize}
@@ -79,8 +78,8 @@ let mapDispatchToProps = (dispatch) => {
         setTotalUsersCount: (totalCount) => {
             dispatch(setUsersTotalCountAC(totalCount))
         },
-        toggleIsFetchingAC: (IsFetching) =>{
-            dispatch(toggleIsFetchingAC(IsFetching))
+        toggleIsFetchingAC: (isFetching) =>{
+            dispatch(toggleIsFetchingAC(isFetching))
         },
     }
 }

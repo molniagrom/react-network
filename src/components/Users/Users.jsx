@@ -13,7 +13,12 @@ export let Users = (props) => {
 
     return <div>
         <div className={s.pagination}>
-            {pages.map((page, i) => (<span onClick={(e) => {props.onPageChanged(page)}} className={props.currentPage === page && s.selectedPage} key={i}>{page}</span>))}
+            {pages.map((page, i) => (
+                <span onClick={() => {props.onPageChanged(page)}}
+                      className={props.currentPage === page ? s.selectedPage : ""}
+                      key={i}>
+               {page}
+                </span>))}
         </div>
         {
             props.users.map(u => (
