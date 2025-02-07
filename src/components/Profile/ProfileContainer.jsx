@@ -5,7 +5,8 @@ import axios from "axios";
 import {connect} from "react-redux";
 import {setUserProfile} from "../../redux/profile-reduser";
 
-export class ProfileContainer extends React.Component {
+class ProfileContainer extends React.Component {
+
   componentDidMount() {
       axios.get(`https://social-network.samuraijs.com/api/1.0/profile/2`)
           .then((response) => {
