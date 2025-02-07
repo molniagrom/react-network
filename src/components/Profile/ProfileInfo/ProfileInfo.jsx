@@ -3,23 +3,22 @@ import s from "./ProfileInfo.module.css";
 import {Preloader} from "../../common/Preloader/Preloader";
 
 export const ProfileInfo = (props) => {
-    // debugger
-
+// debugger
     if (!props.profile) {
         return <Preloader />
     }
-    // debugger
     return (
         <div>
             <div>
                 <img src="https://linagro.tn/images/entries/700x300/southern-alps-700x300.png"></img>
             </div>
             <div className={s.descriptionBlock}>
-                <img src={props.profile.photos.small} alt="Avatar" className={s.avatar} />
+                <img src={props.profile.photos.large} alt="Avatar" className={s.avatar} />
                 <div className={s.info}>
                     <p><strong>Имя:</strong> {props.profile.fullName}</p>
                     <p><strong>Работа:</strong> {props.profile.lookingForAJobDescription}</p>
-                    <p><strong>Обо мне:</strong> {props.profile.aboutMe}</p>
+                    <p><strong>Обо мне:</strong> {props.profile.aboutMe}</p>d
+                    <p><strong>userID:</strong> {props.profile.userId}</p>
                     {props.profile.contacts.instagram && (
                         <p>
                             <strong>Instagram:</strong>
