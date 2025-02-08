@@ -4,13 +4,15 @@ import { profileReducer } from "./profile-reduser";
 import { dialogReducer } from "./dialogs-reduser";
 import { sidebarReducer } from "./sidebar-reduser";
 import {usersReducer} from "./users-reduser";
+import {authReducer} from "./auth-reducer";
 
 // Объединяем редьюсеры
 let reducers = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogReducer,
     sidebar: sidebarReducer,
-    usersPage: usersReducer
+    usersPage: usersReducer,
+    auth: authReducer,
 });
 
 // Создаём store с использованием configureStore
