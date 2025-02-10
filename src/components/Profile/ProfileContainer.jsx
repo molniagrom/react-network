@@ -1,18 +1,18 @@
 import React from "react";
 import s from "./Profile.module.css";
 import {Profile} from "./Profile";
-import axios from "axios";
 import {connect} from "react-redux";
 import {setUserProfile} from "../../redux/profile-reduser";
 import {useParams} from "react-router-dom";
+import {usersAPi} from "../../api/api";
 
 class ProfileContainer extends React.Component {
 
   componentDidMount() {
      const userID = this.props.userID || 2
-      axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userID}`)
-          .then((response) => {
-              this.props.setUserProfile(response.data);
+      usersAPi.getUserIDForProfile(userID)
+          .then((data) => {
+              this.props.setUserProfile(data);
           })
   }
 

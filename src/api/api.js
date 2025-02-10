@@ -14,9 +14,23 @@ export const usersAPi = {
             .then(response => response.data);
     },
 
-    getFollow(currentPage, pageSize) {
-        return instance.get(`follow?page=${currentPage}&count=${pageSize}`)
+    getFollow(id) {
+        return instance.post(`follow/${id}`)
+            .then(response => response.data.resultCode);
+    },
+
+    getUnFollow(id) {
+        return instance.delete(`follow/${id}`)
+            .then(response => response.data.resultCode);
+    },
+
+    getAuthMe(){
+        return instance.get(`https://social-network.samuraijs.com/api/1.0/auth/me`)
             .then(response => response.data);
     },
 
+    getUserIDForProfile(userID) {
+        return instance.get(`https://social-network.samuraijs.com/api/1.0/profile/${userID}`)
+            .then(response => response.data);
+    }
 }
