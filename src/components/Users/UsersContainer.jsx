@@ -17,7 +17,8 @@ export class UsersAPIComponent extends React.Component {
     componentDidMount() {
         this.props.toggleIsFetching(true)
 
-        usersAPi.getUsers(this.props.currentPage, this.props.currentPage).then((data) => {
+        usersAPi.getUsers(this.props.currentPage, this.props.pageSize)
+            .then((data) => {
             // debugger
                 this.props.toggleIsFetching(false)
                 this.props.setUsers(data.items);

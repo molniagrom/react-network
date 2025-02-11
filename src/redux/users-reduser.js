@@ -11,7 +11,8 @@ let initialState = {
     pageSize: 5,
     totalUsersCount: 0,
     currentPage: 3,
-    isFetching: false,
+    //У меня здесь false А у Димыча true, но видимо это никак не влияет
+    isFetching: true,
     followingInProgress: [ ],
 };
 
@@ -53,12 +54,12 @@ export const usersReducer = (state = initialState, action) => {
                 return {...state, isFetching: action.isFetching}
 
         case TOGGLE_IS_FOLLOWING_PROGRESS:
-                return {
-                    ...state,
-                     followingInProgress: action.isFetching
-                         ? [...state.followingInProgress, action.userID]
-                         : state.followingInProgress.filter(id => id !== action.userID)
-                }
+            return {
+                ...state,
+                followingInProgress: action.followingInProgress
+                    ? [...state.followingInProgress, action.userID] // Добавляем ID пользователя в массив
+                    : state.followingInProgress.filter(id => id !== action.userID) // Удаляем ID пользователя из массива
+            };
         default:
             return state;
     }
@@ -71,4 +72,4 @@ export const setUsers = (users) => ({type: SET_USERS, users});
 export const setCurrentPage = (currentPage) => ({type: SET_CURRENT_PAGE, currentPage});
 export const setTotalUsersCount = (totalUsersCount) => ({type: SET_TOTAL_USERS_COUNT, count: totalUsersCount});
 export const toggleIsFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFetching});
-export const toggleFollowingProgress = (isFetching, userID) => ({type: TOGGLE_IS_FETCHING, isFetching, userID});
+export const toggleFollowingProgress = (followingInProgress, userID) => ({type: TOGGLE_IS_FOLLOWING_PROGRESS, followingInProgress, userID});

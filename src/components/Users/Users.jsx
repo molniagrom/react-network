@@ -10,6 +10,9 @@ export let Users = (props) => {
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i);
     }
+    // debugger
+
+    // Проблема: При нажатии подписаться отписаться, показывается Preloader А так быть не должно. Плюс Я не вижу disabled
 
     return (
         <div>
@@ -37,37 +40,46 @@ export let Users = (props) => {
                             </NavLink>
                         </div>
                         <div>
-                            {u.followed ? (
-                                <button onClick={() => {
-                                    usersAPi.getUnFollow(u.id)
-                                        .then((resultCode) => {
-                                                if (resultCode === 0) {
-                                                    props.unfollow(u.id);
-                                                }
-                                            })
-                                            .catch((error) => {
-                                                console.error("Ошибка при отписке:", error);
-                                            });
-                                    }}
-                                >
-                                    Unfollow
-                                </button>
-                            ) : (
-                                <button onClick={() => {
-                                    usersAPi.getFollow(u.id)
-                                            .then((resultCode) => {
-                                                if (resultCode === 0) {
-                                                    props.follow(u.id);
-                                                }
-                                            })
-                                            .catch((error) => {
-                                                console.error("Ошибка при подписке:", error);
-                                            });
-                                    }}
-                                >
-                                    Follow
-                                </button>
-                            )}
+                           {u.followed ? (
+                               <button
+                                   disabled={props.followingInProgress.includes(u.id)}
+                                   onClick={() => {
+                                       props.toggleFollowingProgress(true, u.id);
+                                       usersAPi.getUnFollow(u.id)
+                                           .then((resultCode) => {
+                                               if (resultCode === 0) {
+                                                   props.unfollow(u.id);
+                                               }
+                                               props.toggleFollowingProgress(false, u.id);
+                                           })
+                                           .catch(() => {
+                                               props.toggleFollowingProgress(false, u.id);
+                                           });
+                                   }}
+                               >
+                                   Unfollow
+                               </button>
+                           ) : (
+                               <button
+                                   disabled={props.followingInProgress.includes(u.id)}
+                                   onClick={() => {
+                                       props.toggleFollowingProgress(true, u.id);
+                                       usersAPi.getFollow(u.id)
+                                           .then((resultCode) => {
+                                               if (resultCode === 0) {
+                                                   props.follow(u.id);
+                                               }
+                                               props.toggleFollowingProgress(false, u.id);
+                                           })
+                                           .catch(() => {
+                                               props.toggleFollowingProgress(false, u.id);
+                                           });
+                                   }}
+                               >
+                                   Follow
+                               </button>
+                           )}
+
                         </div>
                     </span>
                     <span>
