@@ -10,9 +10,6 @@ export let Users = (props) => {
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i);
     }
-    // debugger
-
-    // Проблема: При нажатии подписаться отписаться, показывается Preloader А так быть не должно. Плюс Я не вижу disabled
 
     return (
         <div>

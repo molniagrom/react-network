@@ -38,7 +38,6 @@ export class UsersAPIComponent extends React.Component {
 
     render() {
         return <>
-             {/*Проблема: Возможно дело может быть в этой строчке */}
             {this.props.isFetching ? <Preloader /> : null}
             <Users totalUsersCount={this.props.totalUsersCount}
                       onPageChanged={this.onPageChanged}
@@ -56,7 +55,6 @@ export class UsersAPIComponent extends React.Component {
 }
 
 let mapStateToProps = (state) => {
-    // debugger
     return {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,

@@ -11,7 +11,6 @@ let initialState = {
     pageSize: 5,
     totalUsersCount: 0,
     currentPage: 3,
-    //У меня здесь false А у Димыча true, но видимо это никак не влияет
     isFetching: true,
     followingInProgress: [ ],
 };
