@@ -42,7 +42,7 @@ export let Users = (props) => {
                         <div>
                            {u.followed ? (
                                <button
-                                   disabled={props.followingInProgress.includes(u.id)}
+                                   disabled={props.followingInProgress.some(id => id === u.id)}
                                    onClick={() => {
                                        props.toggleFollowingProgress(true, u.id);
                                        usersAPi.getUnFollow(u.id)
@@ -61,7 +61,7 @@ export let Users = (props) => {
                                </button>
                            ) : (
                                <button
-                                   disabled={props.followingInProgress.includes(u.id)}
+                                   disabled={props.followingInProgress.some(id => id === u.id)}
                                    onClick={() => {
                                        props.toggleFollowingProgress(true, u.id);
                                        usersAPi.getFollow(u.id)
