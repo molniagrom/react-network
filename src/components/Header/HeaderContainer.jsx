@@ -9,9 +9,9 @@ class HeaderContainer extends React.Component {
         usersAPi.getAuthMe()
             .then((response) => {
                 // debugger
-               if (response.status === 200 || response.data.resultCode === 0) {
-                   let {id, login, email} = response.data.data;
-                   this.props.setAuthUserData(id, login, email);
+               if (response.status === 200 || response.resultCode === 0) {
+                   let {id, email, login,} = response.data;
+                   this.props.setAuthUserData(id, email, login);
                }
             })
     }
@@ -27,6 +27,7 @@ class HeaderContainer extends React.Component {
 const mapStateToProps = (state) => ({
     isAuth: state.auth.isAuth,
     email: state.auth.email,
+    login: state.auth.login,
 })
 
 export default connect(mapStateToProps, {setAuthUserData}) (HeaderContainer);
