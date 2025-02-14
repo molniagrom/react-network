@@ -3,6 +3,7 @@ import s from "./Dialogs.module.css"
 import {DialogItem} from "./DialogItem/DialogsItem";
 import {Message} from "./Message/Message";
 import {EnteringMessages} from "./EnteringMessages/EnteringMessages";
+import {Navigate} from "react-router-dom";
 
 export const Dialogs = (props) => {
     // debugger
@@ -12,6 +13,9 @@ export const Dialogs = (props) => {
     let dialogsElements = state.dialogs.map(d => <DialogItem name={d.name} id={d.id} key={d.id}/>);
     let messageElements = state.messages.map(m => <Message key={m.id} message={m.message} isMine={m.isMine}/>);
 
+    if(!props.isAuth) {
+        return <Navigate to="/login"/>
+    }
 
     return (
         <div className={s.dialogs}>

@@ -9,6 +9,7 @@ import {NavbarContainer} from "./components/Navbar/NavbarContainer";
 import {UsersContainer} from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import {Login} from "./components/Login/Login";
 
 const App = () => {
     return (<div className="app-wrapper">
@@ -21,6 +22,7 @@ const App = () => {
                 <Route path="/news/*" element={<News/>}/>
                 <Route path="/music/*" element={<Music/>}/>
                 <Route path="/users/*" element={<UsersContainer/>}/>
+                <Route path="/login/*" element={<Login/>}/>
                 <Route path="/settings/*" element={<Settings/>}/>
             </Routes>
         </div>
