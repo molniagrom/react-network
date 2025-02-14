@@ -1,4 +1,4 @@
-import {usersAPi} from "../api/api";
+import {authAPI as authAPi, usersAPi} from "../api/api";
 
 const SET_USER_DATA = "SET_USER_DATA";
 
@@ -30,7 +30,7 @@ export const setAuthUserData = (userID, email, login) => ({type: SET_USER_DATA, 
 
 export const getAuthMeThunk = () => {
     return (dispatch) => {
-        usersAPi.getAuthMe()
+        authAPi.getMe()
             .then((response) => {
                 if (response.status === 200 || response.resultCode === 0) {
                     const { id, email, login } = response.data;

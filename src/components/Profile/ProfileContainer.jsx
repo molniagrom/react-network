@@ -2,19 +2,14 @@ import React from "react";
 import s from "./Profile.module.css";
 import {Profile} from "./Profile";
 import {connect} from "react-redux";
-import {setUserProfile} from "../../redux/profile-reduser";
+import {getProfile, setUserProfile} from "../../redux/profile-reduser";
 import {useParams} from "react-router-dom";
-import {usersAPi} from "../../api/api";
 
 class ProfileContainer extends React.Component {
 
   componentDidMount() {
       // convert to thunk
-     const userID = this.props.userID || 2
-      usersAPi.getUserIDForProfile(userID)
-          .then((data) => {
-              this.props.setUserProfile(data);
-          })
+     this.props.getProfile(this.props.userID)
   }
 
    render() {
@@ -36,4 +31,4 @@ function ProfileContainerWrapper(props) {
     return <ProfileContainer {...props} userID={userID} />;
 }
 
-export default connect(mapStateToProps, {setUserProfile}) (ProfileContainerWrapper);
+export default connect(mapStateToProps, {setUserProfile, getProfile}) (ProfileContainerWrapper);

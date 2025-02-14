@@ -24,13 +24,15 @@ export const usersAPi = {
             .then(response => response.data.resultCode);
     },
 
-    getAuthMe(){
-        return instance.get(`https://social-network.samuraijs.com/api/1.0/auth/me`)
-            .then(response => response.data);
-    },
-
     getUserIDForProfile(userID) {
-        return instance.get(`https://social-network.samuraijs.com/api/1.0/profile/${userID}`)
+        return instance.get(`profile/${userID}`)
             .then(response => response.data);
     }
+}
+
+export const authAPI = {
+    getMe(){
+        return instance.get(`auth/me`)
+            .then(response => response.data);
+    },
 }
