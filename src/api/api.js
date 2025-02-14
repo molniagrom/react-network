@@ -14,12 +14,12 @@ export const usersAPi = {
             .then(response => response.data);
     },
 
-    getFollow(id) {
+    follow(id) {
         return instance.post(`follow/${id}`)
             .then(response => response.data.resultCode);
     },
 
-    getUnFollow(id) {
+    unFollow(id) {
         return instance.delete(`follow/${id}`)
             .then(response => response.data.resultCode);
     },

@@ -2,38 +2,19 @@ import React from "react";
 import {connect} from "react-redux";
 import {
     follow,
-    setCurrentPage,
-    setUsers,
-    setTotalUsersCount,
-    toggleIsFetching,
-    unfollow, toggleFollowingProgress
+    unfollow, toggleFollowingProgress, getUsers
 } from "../../redux/users-reduser";
 import {Users} from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
-import {usersAPi} from "../../api/api";
 
 export class UsersAPIComponent extends React.Component {
 
     componentDidMount() {
-        this.props.toggleIsFetching(true)
-
-        usersAPi.getUsers(this.props.currentPage, this.props.pageSize)
-            .then((data) => {
-            // debugger
-                this.props.toggleIsFetching(false)
-                this.props.setUsers(data.items);
-                this.props.setTotalUsersCount(data.totalCount);
-            })
+        this.props.getUsers(this.props.currentPage, this.props.pageSize)
     }
 
     onPageChanged = (pageNumber) => {
-        this.props.setCurrentPage(pageNumber)
-        this.props.toggleIsFetching(true)
-
-        usersAPi.getUsers(pageNumber, this.props.pageSize).then((data) => {
-                this.props.toggleIsFetching(false)
-                this.props.setUsers(data.items);
-            })
+        this.props.getUsers(pageNumber, this.props.pageSize)
     }
 
     render() {
@@ -47,7 +28,6 @@ export class UsersAPIComponent extends React.Component {
                       follow={this.props.follow}
                       unfollow={this.props.unfollow}
                       isFetching={this.props.isFetching}
-                      toggleFollowingProgress={this.props.toggleFollowingProgress}
                       followingInProgress={this.props.followingInProgress}
                 />
         </>
@@ -90,5 +70,5 @@ let mapStateToProps = (state) => {
 
 
 export const UsersContainer =
-    connect(mapStateToProps,  {follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount, toggleIsFetching, toggleFollowingProgress})(UsersAPIComponent)
+    connect(mapStateToProps,  {follow, unfollow, toggleFollowingProgress, getUsers})(UsersAPIComponent)
 

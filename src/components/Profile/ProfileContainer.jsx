@@ -9,6 +9,7 @@ import {usersAPi} from "../../api/api";
 class ProfileContainer extends React.Component {
 
   componentDidMount() {
+      // convert to thunk
      const userID = this.props.userID || 2
       usersAPi.getUserIDForProfile(userID)
           .then((data) => {

@@ -8,7 +8,7 @@ class HeaderContainer extends React.Component {
     componentDidMount() {
         usersAPi.getAuthMe()
             .then((response) => {
-                // debugger
+                // convert to thunk
                if (response.status === 200 || response.resultCode === 0) {
                    let {id, email, login,} = response.data;
                    this.props.setAuthUserData(id, email, login);

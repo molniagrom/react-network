@@ -3,6 +3,7 @@ import s from "./users.module.css";
 import userPhoto from "../../assets/images/user.jpg";
 import { NavLink } from "react-router-dom";
 import {usersAPi} from "../../api/api";
+import {follow, unFollow} from "../../redux/users-reduser";
 
 export let Users = (props) => {
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
@@ -41,17 +42,7 @@ export let Users = (props) => {
                                <button
                                    disabled={props.followingInProgress.some(id => id === u.id)}
                                    onClick={() => {
-                                       props.toggleFollowingProgress(true, u.id);
-                                       usersAPi.getUnFollow(u.id)
-                                           .then((resultCode) => {
-                                               if (resultCode === 0) {
-                                                   props.unfollow(u.id);
-                                               }
-                                               props.toggleFollowingProgress(false, u.id);
-                                           })
-                                           .catch(() => {
-                                               props.toggleFollowingProgress(false, u.id);
-                                           });
+                                       props.unfollow(u.id)
                                    }}
                                >
                                    Unfollow
@@ -60,17 +51,7 @@ export let Users = (props) => {
                                <button
                                    disabled={props.followingInProgress.some(id => id === u.id)}
                                    onClick={() => {
-                                       props.toggleFollowingProgress(true, u.id);
-                                       usersAPi.getFollow(u.id)
-                                           .then((resultCode) => {
-                                               if (resultCode === 0) {
-                                                   props.follow(u.id);
-                                               }
-                                               props.toggleFollowingProgress(false, u.id);
-                                           })
-                                           .catch(() => {
-                                               props.toggleFollowingProgress(false, u.id);
-                                           });
+                                       props.follow(u.id)
                                    }}
                                >
                                    Follow
