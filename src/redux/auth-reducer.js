@@ -1,3 +1,5 @@
+import {usersAPi} from "../api/api";
+
 const SET_USER_DATA = "SET_USER_DATA";
 
 let initialState = {
@@ -25,3 +27,18 @@ export const authReducer = (state = initialState, action) => {
 
 // actions
 export const setAuthUserData = (userID, email, login) => ({type: SET_USER_DATA, data:{userID, email, login}});
+
+export const getAuthMeThunk = () => {
+    return (dispatch) => {
+        usersAPi.getAuthMe()
+            .then((response) => {
+                if (response.status === 200 || response.resultCode === 0) {
+                    const { id, email, login } = response.data;
+                    dispatch(setAuthUserData(id, email, login));
+                }
+            })
+            .catch((error) => {
+                console.error("Ошибка при получении данных авторизации:", error);
+            });
+    };
+};
