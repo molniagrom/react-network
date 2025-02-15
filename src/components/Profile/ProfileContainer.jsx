@@ -3,21 +3,16 @@ import s from "./Profile.module.css";
 import {Profile} from "./Profile";
 import {connect} from "react-redux";
 import {getProfile, setUserProfile} from "../../redux/profile-reduser";
-import {Navigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 class ProfileContainer extends React.Component {
 
   componentDidMount() {
-      // convert to thunk
      this.props.getProfile(this.props.userID)
   }
 
    render() {
-
-       if(!this.props.isAuth) {
-           return <Navigate to="/login"/>
-       }
-
       return (
         <div>
             <Profile {...this.props} profile={this.props.profile}/>
@@ -26,15 +21,15 @@ class ProfileContainer extends React.Component {
    }
 }
 
-let mapStateToProps = (state) =>({
-    profile: state.profilePage.profile,
-    isAuth: state.auth.isAuth,
-})
-
-
 function ProfileContainerWrapper(props) {
     const { userID } = useParams();
     return <ProfileContainer {...props} userID={userID} />;
 }
 
-export default connect(mapStateToProps, {setUserProfile, getProfile}) (ProfileContainerWrapper);
+let mapStateToProps = (state) =>({
+    profile: state.profilePage.profile,
+})
+
+const ConnectedProfileContainer = withAuthRedirect(ProfileContainerWrapper);
+
+export default connect(mapStateToProps, {setUserProfile, getProfile}) (ConnectedProfileContainer);

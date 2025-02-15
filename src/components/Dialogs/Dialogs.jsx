@@ -13,10 +13,6 @@ export const Dialogs = (props) => {
     let dialogsElements = state.dialogs.map(d => <DialogItem name={d.name} id={d.id} key={d.id}/>);
     let messageElements = state.messages.map(m => <Message key={m.id} message={m.message} isMine={m.isMine}/>);
 
-    if(!props.isAuth) {
-        return <Navigate to="/login"/>
-    }
-
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>

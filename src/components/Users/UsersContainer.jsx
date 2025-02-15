@@ -6,6 +6,7 @@ import {
 } from "../../redux/users-reduser";
 import {Users} from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 export class UsersAPIComponent extends React.Component {
 
@@ -68,7 +69,14 @@ let mapStateToProps = (state) => {
 //     }
 // }
 
+// можно так
+// let withRedirect = withAuthRedirect(UsersAPIComponent)
+//
+// export const UsersContainer =
+//     connect(mapStateToProps,  {follow, unfollow, toggleFollowingProgress, getUsers})(withRedirect)
 
+// можно так
 export const UsersContainer =
-    connect(mapStateToProps,  {follow, unfollow, toggleFollowingProgress, getUsers})(UsersAPIComponent)
-
+    withAuthRedirect(
+        connect(mapStateToProps,  {follow, unfollow, toggleFollowingProgress, getUsers})(UsersAPIComponent)
+    )
