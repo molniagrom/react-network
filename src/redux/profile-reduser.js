@@ -1,8 +1,9 @@
-import {usersAPi} from "../api/api";
+import {profileAPI, usersAPi} from "../api/api";
 
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
+const SET_STATUS = "SET_STATUS";
 
 export let initialState = {
     posts: [
@@ -14,7 +15,8 @@ export let initialState = {
         {id: 6, message: 'I\'m lazy', quantityLike: 2},
     ],
     newPostText: "I'm happier than anyone...",
-    profile: null
+    profile: null,
+    status: "",
 };
 
 export const profileReducer = (state = initialState, action) => {
@@ -43,6 +45,10 @@ export const profileReducer = (state = initialState, action) => {
             return {...state, profile: action.profile};
         }
 
+        case SET_STATUS: {
+            return {...state, status: action.status};
+        }
+
         default:
             return state;
     }
@@ -52,14 +58,34 @@ export const profileReducer = (state = initialState, action) => {
 export const addPostCreator = () => ({type: ADD_POST});
 export const updateNewPostCreator = (text) => ({type: UPDATE_NEW_POST_TEXT, newText: text});
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
+export const setStatus = (status) => ({type: SET_STATUS, status});
 
 export const getProfile = (userID) => {
     return (dispatch) => {
         const id = userID || 2
-        usersAPi.getUserIDForProfile(id)
+        usersAPi.getProfile(id)
             .then((data) => {
                 dispatch(setUserProfile(data))
             })
     }
 }
-
+export const getStatus = (userID) => {
+    return (dispatch) => {
+        const id = userID || 2
+        // I wrote here getProfile
+        profileAPI.getStatus(id)
+            .then((response) => {
+                dispatch(setStatus(response))
+            })
+    }
+}
+export const upDateStatus = (status) => {
+    return (dispatch) => {
+        profileAPI.upDateStatus(status)
+            .then((data) => {
+                if(data.resultCode === 0) {
+                    dispatch(setStatus(status))
+                }
+            })
+    }
+}

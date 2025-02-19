@@ -3,15 +3,29 @@ import React from "react";
 export class ProfileStatus extends React.Component {
     state = {
         editMode: false,
+        status: this.props.status || "",  // Гарантируем, что `status` всегда строка
     };
 
+    componentDidUpdate(prevProps) {
+        // Обновляем state, если status в props изменился
+        if (prevProps.status !== this.props.status) {
+            this.setState({ status: this.props.status || "" });
+        }
+    }
+
     activateEditMode = () => {
-        debugger
-        console.log("this:", this)
         this.setState({ editMode: true });
     };
-    deactivateEditMode () {
+
+    deactivateEditMode = () => {
         this.setState({ editMode: false });
+        this.props.upDateStatus(this.state.status || "");  // Отправляем не null, а строку
+    };
+
+    onStatusChange = (e) => {
+        this.setState({
+            status: e.currentTarget.value,
+        });
     };
 
     render() {
@@ -19,12 +33,17 @@ export class ProfileStatus extends React.Component {
             <>
                 {!this.state.editMode && (
                     <div>
-                        <span onDoubleClick={this.activateEditMode}>{this.props.status}</span>
+                        <span onClick={this.activateEditMode}>{this.props.status || "---"}</span>
                     </div>
                 )}
                 {this.state.editMode && (
                     <div>
-                        <input onBlur={this.deactivateEditMode} value={this.props.status} autoFocus />
+                        <input
+                            onChange={this.onStatusChange}
+                            autoFocus
+                            onBlur={this.deactivateEditMode}
+                            value={this.state.status || ""}  // Если null → пустая строка
+                        />
                     </div>
                 )}
             </>

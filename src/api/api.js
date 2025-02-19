@@ -24,10 +24,28 @@ export const usersAPi = {
             .then(response => response.data.resultCode);
     },
 
-    getUserIDForProfile(userID) {
+    getProfile(userID) {
+        console.log("obsolete method. Please use profileAPI")
+        return profileAPI.getProfile(userID)
+    }
+}
+export const profileAPI = {
+    getProfile(userID) {
         return instance.get(`profile/${userID}`)
             .then(response => response.data);
-    }
+    },
+    getStatus(userID) {
+        return instance.get(`profile/status/${userID}`)
+            .then(response => response.data);
+    },
+    upDateStatus(status) {
+        return instance.put(`profile/status`, {
+            status: status
+        })
+            .then(response => response.data);
+
+    },
+
 }
 
 export const authAPI = {

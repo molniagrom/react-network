@@ -13,7 +13,7 @@ export const ProfileInfo = (props) => {
             {/*<div>*/}
             {/*    <img src="https://linagro.tn/images/entries/700x300/southern-alps-700x300.png"></img>*/}
             {/*</div>*/}
-            <ProfileStatus status={"hello"} />
+            <ProfileStatus status={props.status} upDateStatus={props.upDateStatus} />
             <div className={s.descriptionBlock}>
                 <img src={props.profile.photos.large} alt="Avatar" className={s.avatar} />
                 <div className={s.info}>
