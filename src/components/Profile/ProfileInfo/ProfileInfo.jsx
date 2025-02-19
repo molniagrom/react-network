@@ -4,7 +4,6 @@ import {Preloader} from "../../common/Preloader/Preloader";
 import {ProfileStatus} from "./ProfileStatus";
 
 export const ProfileInfo = (props) => {
-// debugger
     if (!props.profile) {
         return <Preloader />
     }
