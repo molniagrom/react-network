@@ -1,35 +1,36 @@
 import React from "react";
-import {Field, reduxForm} from "redux-form";
+import { Formik, Form, Field } from "formik";
 
-export const Login = (props) => {
-
-    const onSubmit = (formData) => {
-        console.log(formData)
-        // Тут у нас все данные мы их можем dispatch в thunk
-    }
-
-    return <div>
-        <h1>Login</h1>
-        <FormReduxLogin onSubmit={onSubmit}/>
-    </div>
-}
-export const LoginForm = (props) => {
-    const { handleSubmit } = props
-
-    return <form onSubmit={handleSubmit}>
+export const Login = () => {
+    return (
         <div>
-            <Field placeholder="Login" name={"login"} component={"input"}/>
+            <h1>Login</h1>
+            {/* 1️⃣ Инициализация Formik */}
+            <Formik
+                initialValues={{ login: "", password: "", rememberMe: false }}
+                onSubmit={(formData) => {
+                    console.log(formData);
+                }}
+            >
+                {({ handleSubmit }) => (
+                    // 2️⃣ Форма с обработчиком handleSubmit
+                    <Form onSubmit={handleSubmit}>
+                        <div>
+                            {/* 3️⃣ Поле ввода login */}
+                            <Field name="login" placeholder="Login" />
+                        </div>
+                        <div>
+                            <Field name="password" type="password" placeholder="Password" />
+                        </div>
+                        <div>
+                            <Field name="rememberMe" type="checkbox" /> remember me
+                        </div>
+                        <div>
+                            <button type="submit">Login</button>
+                        </div>
+                    </Form>
+                )}
+            </Formik>
         </div>
-        <div>
-            <Field placeholder="Password" name={"password"} component={"input"}/>
-        </div>
-        <div>
-            <Field component={"input"} name={"rememberMe"} type={"checkbox"}/> remember me
-        </div>
-        <div>
-            <button>Login</button>
-        </div>
-    </form>
-}
-
-const FormReduxLogin = reduxForm({form: 'login'})(LoginForm)
+    );
+};
