@@ -6,6 +6,7 @@ import { sidebarReducer } from "./sidebar-reduser";
 import {usersReducer} from "./users-reduser";
 import {authReducer} from "./auth-reducer";
 import {thunk} from "redux-thunk";
+import { reducer as formReducer } from 'redux-form'
 
 const thunkMiddleware = thunk;
 
@@ -16,6 +17,7 @@ let reducers = combineReducers({
     sidebar: sidebarReducer,
     usersPage: usersReducer,
     auth: authReducer,
+    form: formReducer,
 });
 
 // Создаём store с использованием configureStore
