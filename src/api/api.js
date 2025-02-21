@@ -54,3 +54,15 @@ export const authAPI = {
             .then(response => response.data);
     },
 }
+
+export const loginAPI = {
+    getAuthorize(formData){
+        return instance.post(`/auth/login`, {
+            email: formData.email,
+            password: formData.password,
+            rememberMe: formData.rememberMe,
+        })
+            .then(response => response.data);
+    },
+}
+

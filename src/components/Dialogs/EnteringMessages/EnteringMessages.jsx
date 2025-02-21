@@ -1,28 +1,43 @@
 import React from "react";
+import { Formik, Form, Field } from "formik";
 
-export const EnteringMessages = (props) => {
-    let newMessage = React.createRef();
+export const EnteringMessages = ({ addMessage, upDateNewMessageBody, newMessageText }) => {
+    return (
+        <TextareaForm
+            addMessage={addMessage}
+            upDateNewMessageBody={upDateNewMessageBody}
+            newMessageText={newMessageText}
+        />
+    );
+};
 
-    let addMessage = () => {
-        props.addMessage();
-    };
-
-    let onMessageChange = (event) => {
-        let text = event.target.value;
-        if (props.upDateNewMessageBody) { // Проверка на наличие функции
-            props.upDateNewMessageBody(text);
-        } else {
-            console.error("upDateNewMessageBody is not a function");
-        }
-    };
+const TextareaForm = ({ addMessage, upDateNewMessageBody, newMessageText }) => {
 
     return (
-        <>
-            <textarea onChange={onMessageChange}
-                      ref={newMessage}
-                      value={props.newMessageText}
-                      placeholder={"Enter your message"}></textarea>
-            <button onClick={addMessage}>Add message</button>
-        </>
-    )
+        <Formik
+            enableReinitialize={true} // Синхронизация с внешним состоянием Redux
+            initialValues={{ message: newMessageText }}
+            onSubmit={(values, { resetForm }) => {
+                addMessage(values.message); // Отправка сообщения
+                resetForm(); // Очистка формы после отправки
+            }}
+        >
+            {({ values, handleChange }) => (
+                <Form>
+                    <Field
+                        name="message"
+                        as="textarea"
+                        value={values.message}
+                        onChange={(e) => {
+                            handleChange(e); // Обновляем внутреннее состояние Formik
+                            upDateNewMessageBody(e.target.value); // Обновляем Redux
+                        }}
+                        placeholder="Enter your message"
+                    />
+                    <button type="submit">Add message</button>
+                </Form>
+            )}
+        </Formik>
+    );
 };
+
