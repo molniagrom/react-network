@@ -8,7 +8,6 @@ export class ProfileStatus extends React.Component {
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        // debugger
         if (prevProps.status !== this.props.status) {
             this.setState({
                 status: this.props.status,

@@ -1,17 +1,16 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
 
-export const EnteringMessages = ({ addMessage, upDateNewMessageBody, newMessageText }) => {
+export const EnteringMessages = ({ addMessage, newMessageText }) => {
     return (
         <TextareaForm
             addMessage={addMessage}
-            upDateNewMessageBody={upDateNewMessageBody}
             newMessageText={newMessageText}
         />
     );
 };
 
-const TextareaForm = ({ addMessage, upDateNewMessageBody, newMessageText }) => {
+const TextareaForm = ({ addMessage, newMessageText }) => {
 
     return (
         <Formik
@@ -30,7 +29,6 @@ const TextareaForm = ({ addMessage, upDateNewMessageBody, newMessageText }) => {
                         value={values.message}
                         onChange={(e) => {
                             handleChange(e); // Обновляем внутреннее состояние Formik
-                            upDateNewMessageBody(e.target.value); // Обновляем Redux
                         }}
                         placeholder="Enter your message"
                     />

@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { authorizeThunk } from "./login-reducer";
 
 class Login extends React.Component {
+
     render() {
         return (
             <div>
