@@ -1,7 +1,21 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
-import { connect } from "react-redux";
-import { authorizeThunk } from "./login-reducer";
+import {Formik, Form, Field} from "formik";
+import {connect} from "react-redux";
+import {authorizeThunk} from "./login-reducer";
+import {Input} from "../common/FormsControls/FormsControls";
+import * as Yup from "yup";
+
+const SignupSchema  = Yup.object().shape({
+    email: Yup.string()
+        .min(10, 'Too Short!')
+        .max(50, 'Too Long!')
+        .required('Required'),
+    password: Yup.string()
+        .min(8, 'Too Short!')
+        .max(20, 'Too Long!')
+        .required('Required'),
+    rememberMe: Yup.boolean(),
+});
 
 class Login extends React.Component {
 
@@ -10,22 +24,23 @@ class Login extends React.Component {
             <div>
                 <h1>Login</h1>
                 <Formik
-                    initialValues={{ email: "", password: "", rememberMe: false }}
-                    onSubmit={(formData, { resetForm }) => {
+                    validationSchema={SignupSchema}
+                    initialValues={{email: "", password: "", rememberMe: false}}
+                    onSubmit={(formData, {resetForm}) => {
                         this.props.authorizeThunk(formData);
                         resetForm();
                     }}
                 >
-                    {({ handleSubmit }) => (
+                    {({handleSubmit}) => (
                         <Form onSubmit={handleSubmit}>
                             <div>
-                                <Field name="email" placeholder="Email" />
+                                <Field name="email" placeholder="Email" component={Input}/>
                             </div>
                             <div>
-                                <Field name="password" type="password" placeholder="Password" />
+                                <Field name="password" type="password" placeholder="Password" component={Input}/>
                             </div>
                             <div>
-                                <Field name="rememberMe" type="checkbox" /> remember me
+                                <Field name="rememberMe" type="checkbox" component={Input}/> remember me
                             </div>
                             <div>
                                 <button type="submit">Login</button>
@@ -40,4 +55,4 @@ class Login extends React.Component {
 
 const mapStateToProps = (state) => ({});
 
-export default connect(mapStateToProps, { authorizeThunk })(Login);
+export default connect(mapStateToProps, {authorizeThunk})(Login);
