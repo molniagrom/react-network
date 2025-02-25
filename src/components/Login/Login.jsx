@@ -1,9 +1,10 @@
 import React from "react";
-import {Formik, Form, Field} from "formik";
+import {Field, Form, Formik} from "formik";
 import {connect} from "react-redux";
-import {authorizeThunk} from "./login-reducer";
 import {FormControl} from "../common/FormsControls/FormsControls";
 import * as Yup from "yup";
+import {login} from "../../redux/auth-reducer";
+import {Navigate} from "react-router-dom";
 
 const SignupSchema = Yup.object().shape({
     email: Yup.string()
@@ -11,22 +12,24 @@ const SignupSchema = Yup.object().shape({
         .max(50, 'Too Long!')
         .required('Required'),
     password: Yup.string()
-        .min(8, 'Too Short!')
+        .min(4, 'Too Short!')
         .max(20, 'Too Long!')
         .required('Required'),
     rememberMe: Yup.boolean(),
 });
 
-class Login extends React.Component {
+function Login(props) {
 
-    render() {
-        return (
-            <div>
-                <h1>Login</h1>
-                <LoginForm {...this.props} />
-            </div>
-        );
+    if (props.isAuth) {
+        return <Navigate replace to="/profile"/>;
     }
+
+    return (
+        <div>
+            <h1>Login</h1>
+            <LoginForm {...props} />
+        </div>
+    );
 }
 
 const LoginForm = (props) => {
@@ -35,7 +38,7 @@ const LoginForm = (props) => {
             validationSchema={SignupSchema}
             initialValues={{email: "", password: "", rememberMe: false}}
             onSubmit={(formData, {resetForm}) => {
-                props.authorizeThunk(formData);
+                props.login(formData.email, formData.password, formData.rememberMe);
                 resetForm();
             }}
         >
@@ -62,6 +65,8 @@ const LoginForm = (props) => {
     )
 }
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+    isAuth: state.auth.isAuth
+});
 
-export default connect(mapStateToProps, {authorizeThunk})(Login);
+export default connect(mapStateToProps, {login})(Login);

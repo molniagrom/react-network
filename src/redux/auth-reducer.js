@@ -16,8 +16,7 @@ export const authReducer = (state = initialState, action) => {
             // debugger
             return {
                 ...state,
-                ...action.data,
-                isAuth: true,
+                ...action.payload,
             };
 
         default:
@@ -26,7 +25,7 @@ export const authReducer = (state = initialState, action) => {
 };
 
 // actions
-export const setAuthUserData = (userID, email, login) => ({type: SET_USER_DATA, data:{userID, email, login}});
+export const setAuthUserData = (userID, email, login, isAuth) => ({type: SET_USER_DATA, payload:{userID, email, login, isAuth}});
 
 export const getAuthMeThunk = () => {
     return (dispatch) => {
@@ -34,7 +33,35 @@ export const getAuthMeThunk = () => {
             .then((response) => {
                 if (response.status === 200 || response.resultCode === 0) {
                     const { id, email, login } = response.data;
-                    dispatch(setAuthUserData(id, email, login));
+                    dispatch(setAuthUserData(id, email, login, true));
+                }
+            })
+            .catch((error) => {
+                console.error("Ошибка при получении данных авторизации:", error);
+            });
+    };
+};
+
+export const login = (email, password, rememberMe) => {
+    return (dispatch) => {
+        authAPi.login(email, password, rememberMe)
+            .then((response) => {
+                if (response.status === 200 || response.resultCode === 0) {
+                    dispatch(setAuthUserData());
+                }
+            })
+            .catch((error) => {
+                console.error("Ошибка при получении данных авторизации:", error);
+            });
+    };
+};
+
+export const logout = () => {
+    return (dispatch) => {
+        authAPi.logout()
+            .then((response) => {
+                if (response.status === 200 || response.resultCode === 0) {
+                    dispatch(setAuthUserData(null, null, null, false));
                 }
             })
             .catch((error) => {
