@@ -1,6 +1,21 @@
 import React from 'react';
 import s from './FormsControls.module.css';
 
+export const FormControl = ({ field, form: { touched, errors }, as: Component = 'input', ...props }) => {
+    const error = errors[field.name] && touched[field.name];
+
+    return (
+        <div className={`${s.formControl} ${error ? s.error : ''}`}>
+            <div>
+                <Component {...field} {...props} />
+            </div>
+            {error && <span>{errors[field.name]}</span>}
+        </div>
+    );
+};
+
+//................................................................
+
 export const TextArea = ({ field, form: {touched, errors}, ...props}) => {
 
     // debugger

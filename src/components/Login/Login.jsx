@@ -2,7 +2,7 @@ import React from "react";
 import {Formik, Form, Field} from "formik";
 import {connect} from "react-redux";
 import {authorizeThunk} from "./login-reducer";
-import {Input} from "../common/FormsControls/FormsControls";
+import {FormControl, Input} from "../common/FormsControls/FormsControls";
 import * as Yup from "yup";
 
 const SignupSchema  = Yup.object().shape({
@@ -34,13 +34,13 @@ class Login extends React.Component {
                     {({handleSubmit}) => (
                         <Form onSubmit={handleSubmit}>
                             <div>
-                                <Field name="email" placeholder="Email" component={Input}/>
+                                <Field name="email" placeholder="Email" component={FormControl}/>
                             </div>
                             <div>
-                                <Field name="password" type="password" placeholder="Password" component={Input}/>
+                                <Field name="password" type="password" placeholder="Password" component={FormControl}/>
                             </div>
                             <div>
-                                <Field name="rememberMe" type="checkbox" component={Input}/> remember me
+                                <Field name="rememberMe" type="checkbox" component={FormControl}/> remember me
                             </div>
                             <div>
                                 <button type="submit">Login</button>
