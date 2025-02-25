@@ -1,4 +1,3 @@
-import {loginAPI} from "../../api/api";
 
 const MY_LOGIN_AUTHORIZE = "MY_LOGIN_AUTHORIZE"
 const MY_LOGIN_ERROR = "MY_LOGIN_ERROR"
@@ -42,15 +41,3 @@ export const loginErrorCreator = (error) => ({
     payload: error,
 });
 
-export const authorizeThunk = (formData) => {
-    return (dispatch) => {
-        loginAPI.getAuthorize(formData)
-            .then((data) => {
-                if (data.resultCode === 0) {
-                    dispatch(authorizeCreator(formData))
-                } else {
-                    dispatch(loginErrorCreator(data.messages[0] || "Ошибка входа"))
-                }
-            })
-    }
-}
