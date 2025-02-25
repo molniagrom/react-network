@@ -1,13 +1,15 @@
 import React from 'react';
 import s from './FormsControls.module.css';
 
-export const FormControl = ({ field, form: { touched, errors }, as: Component = 'input', ...props }) => {
+export const FormControl = ({ field, form: { touched, errors }, component: Component = "input", ...props }) => {
+
+    const { componentProps, ...restProps } = props; // Извлекаем componentProps, чтобы он не попал в DOM
     const error = errors[field.name] && touched[field.name];
 
     return (
-        <div className={`${s.formControl} ${error ? s.error : ''}`}>
+        <div className={`${s.formControl} ${error ? s.error : ""}`}>
             <div>
-                <Component {...field} {...props} />
+                <Component {...field} {...restProps} {...componentProps} />
             </div>
             {error && <span>{errors[field.name]}</span>}
         </div>
