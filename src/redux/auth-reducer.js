@@ -47,7 +47,7 @@ export const login = (email, password, rememberMe) => {
         authAPi.login(email, password, rememberMe)
             .then((response) => {
                 if (response.status === 200 || response.resultCode === 0) {
-                    dispatch(setAuthUserData());
+                    dispatch(getAuthMeThunk());
                 }
             })
             .catch((error) => {
