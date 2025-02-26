@@ -1,6 +1,8 @@
 import {authAPI as authAPi} from "../api/api";
 
 const SET_USER_DATA = "SET_USER_DATA";
+const SET_ERROR = 'SET_ERROR';
+
 
 let initialState = {
         id: null,
@@ -18,14 +20,24 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 ...action.payload,
             };
-
+        case SET_ERROR:
+            return {
+                ...state,
+                errorAuth: action.payload,
+            }
         default:
             return state;
     }
 };
 
 // actions
-export const setAuthUserData = (userID, email, login, isAuth) => ({type: SET_USER_DATA, payload:{userID, email, login, isAuth}});
+export const setAuthUserData = (userID, email, login, isAuth) => ({type:  SET_USER_DATA, payload:{userID, email, login, isAuth}});
+export const setError = (errorMessage) => {
+    return {
+        type:  SET_ERROR,
+        payload: errorMessage
+    };
+}
 
 export const getAuthMeThunk = () => {
     return (dispatch) => {
@@ -48,13 +60,19 @@ export const login = (email, password, rememberMe) => {
             .then((response) => {
                 if (response.status === 200 || response.resultCode === 0) {
                     dispatch(getAuthMeThunk());
+                    dispatch(setError(null));
+                } else {
+                    const errorMessage = response.messages?.[0];
+                    dispatch(setError(errorMessage));
                 }
             })
             .catch((error) => {
-                console.error("Ошибка при получении данных авторизации:", error);
+                dispatch(setError("Ошибка сети. Попробуйте позже."));
+                console.error("Error when receiving authorization data:", error);
             });
     };
 };
+
 
 export const logout = () => {
     return (dispatch) => {
@@ -65,7 +83,7 @@ export const logout = () => {
                 }
             })
             .catch((error) => {
-                console.error("Ошибка при получении данных авторизации:", error);
+                console.error("Error when receiving authorization data:", error);
             });
     };
 };
