@@ -1,9 +1,9 @@
-import React from "react";
+import React, {useEffect} from "react";
 import s from "./Profile.module.css";
 import {Profile} from "./Profile";
 import {connect} from "react-redux";
 import {getProfile, getStatus, setUserProfile, upDateStatus} from "../../redux/profile-reduser";
-import {useParams} from "react-router-dom";
+import {Navigate, useParams} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 
@@ -16,6 +16,8 @@ class ProfileContainer extends React.Component {
     }
 
     render() {
+        if (!this.props.isAuth) return <Navigate to="/login" />;
+
         return (
             <div>
                 <Profile {...this.props} profile={this.props.profile} status={this.props.status} upDateStatus={this.props.upDateStatus}/>
@@ -36,6 +38,8 @@ function ProfileContainerWrapper(props) {
 let mapStateToProps = (state) =>({
     profile: state.profilePage.profile,
     status: state.profilePage.status,
+    authUserID: state.auth.userID, // Если userID отсутствует в URL, можно использовать ID из auth
+
 })
 
 export default compose(

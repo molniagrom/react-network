@@ -5,10 +5,10 @@ const SET_ERROR = 'SET_ERROR';
 
 
 let initialState = {
-        id: null,
-        email: null,
-        login: null,
-        isAuth: false,
+    id: null,
+    email: null,
+    login: null,
+    isAuth: false,
 };
 
 // debugger
@@ -31,27 +31,28 @@ export const authReducer = (state = initialState, action) => {
 };
 
 // actions
-export const setAuthUserData = (userID, email, login, isAuth) => ({type:  SET_USER_DATA, payload:{userID, email, login, isAuth}});
+export const setAuthUserData = (userID, email, login, isAuth) => ({
+    type: SET_USER_DATA,
+    payload: {userID, email, login, isAuth}
+});
 export const setError = (errorMessage) => {
     return {
-        type:  SET_ERROR,
+        type: SET_ERROR,
         payload: errorMessage
     };
 }
 
-export const getAuthMeThunk = () => {
-    return (dispatch) => {
-        authAPi.getMe()
-            .then((response) => {
-                if (response.status === 200 || response.resultCode === 0) {
-                    const { id, email, login } = response.data;
-                    dispatch(setAuthUserData(id, email, login, true));
-                }
-            })
-            .catch((error) => {
-                console.error("Ошибка при получении данных авторизации:", error);
-            });
-    };
+export const getAuthMeThunk = () => (dispatch) => {
+    return authAPi.getMe()
+        .then((response) => {
+            if (response.status === 200 || response.resultCode === 0) {
+                const {id, email, login} = response.data;
+                dispatch(setAuthUserData(id, email, login, true));
+            }
+        })
+        .catch((error) => {
+            console.error("Ошибка при получении данных авторизации:", error);
+        });
 };
 
 export const login = (email, password, rememberMe) => {
