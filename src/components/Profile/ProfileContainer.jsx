@@ -16,6 +16,8 @@ class ProfileContainer extends React.Component {
     }
 
     render() {
+        console.log("ProfileContainer")
+
         if (!this.props.isAuth) return <Navigate to="/login" />;
 
         return (
@@ -35,12 +37,15 @@ function ProfileContainerWrapper(props) {
     return <ProfileContainerUseParams {...props} />;
 }
 
-let mapStateToProps = (state) =>({
-    profile: state.profilePage.profile,
-    status: state.profilePage.status,
-    authUserID: state.auth.userID, // Если userID отсутствует в URL, можно использовать ID из auth
+let mapStateToProps = (state) => {
+    console.log("mapStateToProps")
+    return ({
+        profile: state.profilePage.profile,
+        status: state.profilePage.status,
+        authUserID: state.auth.userID, // Если userID отсутствует в URL, можно использовать ID из auth
+    })
 
-})
+}
 
 export default compose(
     connect(mapStateToProps, {setUserProfile, getProfile, getStatus, upDateStatus}),
