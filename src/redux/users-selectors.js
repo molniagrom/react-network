@@ -1,4 +1,6 @@
-export const getUsers = (state) => {
+import {createSelector} from "reselect";
+
+export const getUsersSelector = (state) => {
     return state.usersPage.users
 }
 
@@ -20,3 +22,9 @@ export const getIsFetching = (state) => {
 export const getFollowingInProgress = (state) => {
     return state.usersPage.followingInProgress
 }
+
+// Example to reselect
+
+// export const getUsers = createSelector( getUsersSelector, (users) => {
+//     users.filter(user => user => true)
+// })
