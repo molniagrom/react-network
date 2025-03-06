@@ -6,6 +6,10 @@ import {TextArea} from "../../common/FormsControls/FormsControls";
 import * as Yup from 'yup';
 
 export const MyPosts = React.memo(props => {
+    // Если вдруг приспичит в классовую компоненту
+    // shouldComponentUpdate(nextProps) {
+    //     return nextProps.posts !== this.props.posts || nextProps.addPost !== this.props.addPost;
+    // }
 
     console.log("RENDER")
 
