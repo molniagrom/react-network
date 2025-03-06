@@ -12,6 +12,7 @@ export let initialState = {
         {id: 4, message: 'I want pizza', quantityLike: 212},
         {id: 5, message: 'So order it', quantityLike: 3},
         {id: 6, message: 'I\'m lazy', quantityLike: 2},
+        {id: 7, message: 'I\'m hungry', quantityLike: 1000},
     ],
     newPostText: "I'm happier than anyone...",
     profile: null,

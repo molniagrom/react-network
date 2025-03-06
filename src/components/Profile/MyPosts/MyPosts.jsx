@@ -1,15 +1,16 @@
 import React from 'react';
 import s from './MyPosts.module.css';
-import { Post } from './Post/Post';
+import {Post} from './Post/Post';
 import {Field, Form, Formik} from "formik";
-import {validateField} from "../../../utils/validators/validators";
 import {TextArea} from "../../common/FormsControls/FormsControls";
 import * as Yup from 'yup';
 
-export const MyPosts = (props) => {
+export const MyPosts = React.memo(props => {
+
+    console.log("RENDER")
 
     let postsElements = props.posts.map((p, i) => (
-        <Post key={i} quantityLike={p.quantityLike} message={p.message} />
+        <Post key={i} quantityLike={p.quantityLike} message={p.message}/>
     ));
 
     return (
@@ -17,15 +18,15 @@ export const MyPosts = (props) => {
             <div>
                 <h3>My post</h3>
             </div>
-           <MyPostForm addPost={props.addPost} newPostText={props.newPostText} />
+            <MyPostForm addPost={props.addPost} newPostText={props.newPostText}/>
             <div className={s.posts}>
                 {postsElements}
             </div>
         </div>
     );
-};
+})
 
-const SignupSchema  = Yup.object().shape({
+const SignupSchema = Yup.object().shape({
     newPostText: Yup.string()
         .min(2, 'Too Short!')
         .max(50, 'Too Long!')
@@ -34,18 +35,18 @@ const SignupSchema  = Yup.object().shape({
 
 const MyPostForm = (props) => {
 
-    const onAddPost = (values, { resetForm }) => {
+    const onAddPost = (values, {resetForm}) => {
         props.addPost(values.newPostText);
         resetForm();
     };
 
     return (
         <Formik
-            initialValues={{ newPostText: "" }}
+            initialValues={{newPostText: ""}}
             validationSchema={SignupSchema}
             onSubmit={onAddPost}
         >
-            {({ handleChange, values, errors, touched }) => (
+            {({handleChange, values, errors, touched}) => (
                 <Form>
                     <div>
                         <Field

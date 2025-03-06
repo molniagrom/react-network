@@ -25,7 +25,6 @@ export const usersAPi = {
     },
 
     getProfile(userID) {
-        console.log("obsolete method. Please use profileAPI")
         return profileAPI.getProfile(userID)
     }
 }
