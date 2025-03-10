@@ -41,4 +41,5 @@ it("after deleting length of messages shouldn't be decremented if id is incorrec
     let newState = profileReducer(state, action);
 
     expect(newState.posts.length).toBe(7)
+
 })
