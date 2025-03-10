@@ -13,7 +13,7 @@ export const MyPosts = React.memo(props => {
 
     console.log("RENDER")
 
-    let postsElements = props.posts.map((p, i) => (
+    let postsElements = [...props.posts].reverse().map((p, i) => (
         <Post key={i} quantityLike={p.quantityLike} message={p.message}/>
     ));
 
