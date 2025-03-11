@@ -55,23 +55,22 @@ export const getAuthMeThunk = () => (dispatch) => {
         });
 };
 
-export const login = (email, password, rememberMe) => {
-    return (dispatch) => {
-        authAPi.login(email, password, rememberMe)
-            .then((response) => {
-                if (response.status === 200 || response.resultCode === 0) {
-                    dispatch(getAuthMeThunk());
-                    dispatch(setError(null));
-                } else {
-                    const errorMessage = response.messages?.[0];
-                    dispatch(setError(errorMessage));
-                }
-            })
-            .catch((error) => {
-                dispatch(setError("Ошибка сети. Попробуйте позже."));
-                console.error("Error when receiving authorization data:", error);
-            });
-    };
+export const login = (email, password, rememberMe) => (dispatch) => {
+    
+    authAPi.login(email, password, rememberMe)
+        .then((response) => {
+            if (response.status === 200 || response.resultCode === 0) {
+                dispatch(getAuthMeThunk());
+                dispatch(setError(null));
+            } else {
+                const errorMessage = response.messages?.[0];
+                dispatch(setError(errorMessage));
+            }
+        })
+        .catch((error) => {
+            dispatch(setError("Ошибка сети. Попробуйте позже."));
+            console.error("Error when receiving authorization data:", error);
+        });
 };
 
 
