@@ -18,11 +18,13 @@ import {
 export class UsersAPIComponent extends React.Component {
 
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize)
+        let {currentPage, pageSize} = this.props;
+        this.props.getUsers(currentPage, pageSize)
     }
 
     onPageChanged = (pageNumber) => {
-        this.props.getUsers(pageNumber, this.props.pageSize)
+        let {pageSize} = this.props;
+        this.props.getUsers(pageNumber, pageSize)
     }
 
     render() {
@@ -42,17 +44,6 @@ export class UsersAPIComponent extends React.Component {
     }
 }
 
-// let mapStateToProps = (state) => {
-//     return {
-//         users: state.usersPage.users,
-//         pageSize: state.usersPage.pageSize,
-//         totalUsersCount: state.usersPage.totalUsersCount,
-//         currentPage: state.usersPage.currentPage,
-//         isFetching: state.usersPage.isFetching,
-//         followingInProgress: state.usersPage.followingInProgress,
-//     }
-// }
-
 let mapStateToProps = (state) => {
     return {
         users: getUsersSelector(state),
@@ -63,42 +54,6 @@ let mapStateToProps = (state) => {
         followingInProgress: getFollowingInProgress(state),
     }
 }
-
-// let mapDispatchToProps = (dispatch) => {
-//     return {
-//         follow: (userID) => {
-//             dispatch(follow(userID))
-//         },
-//         unfollow: (userID) => {
-//             dispatch(unfollow(userID))
-//         },
-//         setUsers: (users) => {
-//             dispatch(setUsers(users))
-//         },
-//         setCurrentPage: (page) => {
-//             dispatch(setCurrentPage(page))
-//         },
-//         setTotalUsersCount: (totalCount) => {
-//             dispatch(setTotalUsersCount(totalCount))
-//         },
-//         toggleIsFetching: (isFetching) =>{
-//             dispatch(toggleIsFetching(isFetching))
-//         },
-//     }
-// }
-
-// можно так
-// let withRedirect = withAuthRedirect(UsersAPIComponent)
-//
-// export const UsersContainer =
-//     connect(mapStateToProps,  {follow, unfollow, toggleFollowingProgress, requestUsers})(withRedirect)
-
-// можно так
-// export const UsersContainer =
-//     withAuthRedirect(
-//         connect(mapStateToProps,  {follow, unfollow, toggleFollowingProgress, requestUsers})(UsersAPIComponent)
-//     )
-
 
 export default compose(
     connect(mapStateToProps,  {follow, unfollow, toggleFollowingProgress, getUsers: requestUsers})

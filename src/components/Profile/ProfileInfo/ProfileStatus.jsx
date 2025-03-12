@@ -13,8 +13,6 @@ export class ProfileStatus extends React.Component {
                 status: this.props.status,
             })
         }
-
-        console.log("componentDidUpdate")
     }
 
     activateEditMode = () => {
@@ -32,7 +30,6 @@ export class ProfileStatus extends React.Component {
     }
 
     render() {
-        console.log("render")
         return (
             <>
                 {!this.state.editMode && (

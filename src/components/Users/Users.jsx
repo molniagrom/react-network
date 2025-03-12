@@ -12,10 +12,11 @@ export let Users = (props) => {
                 totalUsersCount={props.totalUsersCount}
                 pageSize={props.pageSize}
             />
-
-            {props.users.map((u) => (
-              <User key={u.id} {...props} user={u} />
-            ))}
+            <div>
+                {props.users.map((u) => (
+                    <User key={u.id} {...props} user={u}/>
+                ))}
+            </div>
         </div>
     );
 };
