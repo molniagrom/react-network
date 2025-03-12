@@ -14,7 +14,7 @@ let initialState = {
     totalUsersCount: 0,
     currentPage: 3,
     isFetching: true,
-    followingInProgress: [ ],
+    followingInProgress: [],
 };
 
 export const usersReducer = (state = initialState, action) => {
@@ -42,17 +42,17 @@ export const usersReducer = (state = initialState, action) => {
                 })
             };
 
-            case SET_USERS:
-                return {...state, users: action.users}
+        case SET_USERS:
+            return {...state, users: action.users}
 
         case SET_CURRENT_PAGE:
-                return {...state, currentPage: action.currentPage}
+            return {...state, currentPage: action.currentPage}
 
         case SET_TOTAL_USERS_COUNT:
-                return {...state, totalUsersCount: action.count}
+            return {...state, totalUsersCount: action.count}
 
         case TOGGLE_IS_FETCHING:
-                return {...state, isFetching: action.isFetching}
+            return {...state, isFetching: action.isFetching}
 
         case TOGGLE_IS_FOLLOWING_PROGRESS:
             return {
@@ -73,52 +73,48 @@ export const setUsers = (users) => ({type: SET_USERS, users});
 export const setCurrentPage = (currentPage) => ({type: SET_CURRENT_PAGE, currentPage});
 export const setTotalUsersCount = (totalUsersCount) => ({type: SET_TOTAL_USERS_COUNT, count: totalUsersCount});
 export const toggleIsFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFetching});
-export const toggleFollowingProgress = (followingInProgress, userID) => ({type: TOGGLE_IS_FOLLOWING_PROGRESS, followingInProgress, userID});
+export const toggleFollowingProgress = (followingInProgress, userID) => ({
+    type: TOGGLE_IS_FOLLOWING_PROGRESS,
+    followingInProgress,
+    userID
+});
 
+export const requestUsers = (currentPage, pageSize) => async (dispatch) => {
+    dispatch(setCurrentPage(currentPage))
+    dispatch(toggleIsFetching(true))
 
-export const requestUsers = (currentPage, pageSize) => {
-    return (dispatch) => {
-        dispatch(setCurrentPage(currentPage))
-        dispatch(toggleIsFetching(true))
+    let data = await usersAPi.getUsers(currentPage, pageSize)
+    dispatch(toggleIsFetching(false))
+    dispatch(setUsers(data.items))
+    dispatch(setTotalUsersCount(data.totalCount))
 
-        usersAPi.getUsers(currentPage, pageSize)
-            .then((data) => {
-                dispatch(toggleIsFetching(false))
-                dispatch(setUsers(data.items))
-                dispatch(setTotalUsersCount(data.totalCount))
-            })
+}
+
+export const follow = (userId) => async (dispatch) => {
+    dispatch(toggleFollowingProgress(true, userId))
+    try {
+        let resultCode = await usersAPi.follow(userId)
+        if (resultCode === 0) {
+            dispatch(followSuccess(userId))
+        }
+    } catch (error) {
+        console.error("Ошибка при подписке:", error);
+    } finally {
+        dispatch(toggleFollowingProgress(false, userId))
     }
 }
 
-export const follow = (userId) => {
-    return (dispatch) => {
-        dispatch(toggleFollowingProgress(true, userId))
-        usersAPi.follow(userId)
-            .then((resultCode) => {
-                if (resultCode === 0) {
-                    dispatch(followSuccess(userId))
-                }
-                dispatch(toggleFollowingProgress(false, userId))
-            })
-            .catch(() => {
-                dispatch(toggleFollowingProgress(false, userId))
-            });
-    }
-}
-
-export const unfollow = (userId) => {
-    return (dispatch) => {
-        dispatch(toggleFollowingProgress(true, userId))
-        usersAPi.unFollow(userId)
-            .then((resultCode) => {
-                if (resultCode === 0) {
-                    dispatch(unfollowSuccess(userId))
-                }
-                dispatch(toggleFollowingProgress(false, userId))
-            })
-            .catch(() => {
-                dispatch(toggleFollowingProgress(false, userId))
-            });
+export const unfollow = (userId) => async (dispatch) => {
+    dispatch(toggleFollowingProgress(true, userId))
+    try {
+        let resultCode = await usersAPi.unFollow(userId)
+        if (resultCode === 0) {
+            dispatch(unfollowSuccess(userId))
+        }
+    } catch (error) {
+        console.error("Ошибка при подписке:", error);
+    } finally {
+        dispatch(toggleFollowingProgress(false, userId))
     }
 }
 
