@@ -3,13 +3,3 @@
     height: 70px;
     border-radius: 50px;
 }
-
-.selectedPage{
-    font-weight: bold;
-
-}
-
-.pagination span {
-    cursor: pointer;
-    padding: 1px 2px;
-}

@@ -9,10 +9,10 @@ import {Provider} from "react-redux";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-    console.log("Current store:", store);
+console.log("Current store:", store);
 
-    root.render(
-        // 87 урок
+root.render(
+    // 87 урок
 //         Для тех у кого классовая компонента рендерится 2 раза, даже с PureComponent.
 //         Долго не мог понять почему такое происходит, в пропсах никаких обновлений стейта
 //         не прилетает, что бы происходил ререндер, выяснил что два раза рендерится еще до того как компонент монтируется.
@@ -20,14 +20,14 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 //         в ReactStrictMode которым у меня был обернут App, в index.js. Этот стрикт мод помогает лучше
 //         отлавливать ошибки разработчикам, поэтому и рендерится по два раза. Если его убрать, рендер происходит один раз.
 
-// <React.StrictMode>
-            <BrowserRouter>
-                <Provider store={store}>
-                    <App/>
-                </Provider>
-            </BrowserRouter>
-        // </React.StrictMode>
-    );
+    <React.StrictMode>
+        <BrowserRouter>
+            <Provider store={store}>
+                <App/>
+            </Provider>
+        </BrowserRouter>
+    </React.StrictMode>
+);
 
 
 // If you want to start measuring performance in your app, pass a function

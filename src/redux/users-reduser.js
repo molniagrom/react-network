@@ -49,8 +49,8 @@ export const usersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 followingInProgress: action.followingInProgress
-                    ? [...state.followingInProgress, action.userID] // Добавляем ID пользователя в массив
-                    : state.followingInProgress.filter(id => id !== action.userID) // Удаляем ID пользователя из массива
+                    ? [...state.followingInProgress, action.userID] // Add user ID to the array
+                    : state.followingInProgress.filter(id => id !== action.userID) // Remove user ID from the array
             };
         default:
             return state;
