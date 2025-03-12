@@ -5,7 +5,6 @@ const SET_USER_PROFILE = "SET_USER_PROFILE";
 const SET_STATUS = "SET_STATUS";
 const DELETE_POST = "DELETE_POST";
 
-
 export let initialState = {
     posts: [
         {id: 1, message: 'Hi, how are you?', quantityLike: 19},
@@ -63,32 +62,21 @@ export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
 export const setStatus = (status) => ({type: SET_STATUS, status});
 export const deletePost = (postId) => ({type: DELETE_POST, postId});
 
-export const getProfile = (userID) => {
-    return (dispatch) => {
-        const id = userID || 2
-        usersAPi.getProfile(id)
-            .then((data) => {
-                dispatch(setUserProfile(data))
-            })
-    }
+export const getProfile = (userID) => async (dispatch) => {
+    const id = userID || 2
+    let response = await usersAPi.getProfile(id)
+    dispatch(setUserProfile(response))
 }
-export const getStatus = (userID) => {
-    return (dispatch) => {
-        const id = userID || 2
-        // I wrote here getProfile
-        profileAPI.getStatus(id)
-            .then((response) => {
-                dispatch(setStatus(response))
-            })
-    }
+
+export const getStatus = (userID) => async (dispatch) => {
+    const id = userID || 2
+    let response = await profileAPI.getStatus(id)
+    dispatch(setStatus(response))
 }
-export const upDateStatus = (status) => {
-    return (dispatch) => {
-        profileAPI.upDateStatus(status)
-            .then((data) => {
-                if(data.resultCode === 0) {
-                    dispatch(setStatus(status))
-                }
-            })
+export const upDateStatus = (status) => async (dispatch) => {
+    // в response будет сидеть результат которым "за-resolve-ится" Promise, который возвращает function upDateStatus
+    let response = await profileAPI.upDateStatus(status)
+    if (response.resultCode === 0) {
+        dispatch(setStatus(status))
     }
 }
