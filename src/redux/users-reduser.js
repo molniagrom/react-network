@@ -90,12 +90,12 @@ export const requestUsers = (currentPage, pageSize) => async (dispatch) => {
 
 }
 
-export const follow = (userId) => async (dispatch) => {
+const followUnfollowFlow = async (dispatch, userId, apiMethod, actionCreator) => {
     dispatch(toggleFollowingProgress(true, userId))
     try {
-        let resultCode = await usersAPi.follow(userId)
+        let resultCode = await apiMethod(userId)
         if (resultCode === 0) {
-            dispatch(followSuccess(userId))
+            dispatch(actionCreator(userId))
         }
     } catch (error) {
         console.error("Ошибка при подписке:", error);
@@ -104,18 +104,14 @@ export const follow = (userId) => async (dispatch) => {
     }
 }
 
+export const follow = (userId) => async (dispatch) => {
+    let apiMethod = usersAPi.follow.bind(usersAPi);
+    await followUnfollowFlow(dispatch, userId, apiMethod, followSuccess)
+}
+
 export const unfollow = (userId) => async (dispatch) => {
-    dispatch(toggleFollowingProgress(true, userId))
-    try {
-        let resultCode = await usersAPi.unFollow(userId)
-        if (resultCode === 0) {
-            dispatch(unfollowSuccess(userId))
-        }
-    } catch (error) {
-        console.error("Ошибка при подписке:", error);
-    } finally {
-        dispatch(toggleFollowingProgress(false, userId))
-    }
+    let apiMethod = usersAPi.unFollow.bind(usersAPi);
+    await followUnfollowFlow(dispatch, userId, apiMethod, unfollowSuccess)
 }
 
 
