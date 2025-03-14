@@ -67,13 +67,3 @@ const MyPostForm = (props) => {
     );
 };
 
-
-//
-// <Field
-//     name="newPostText"
-//     as={TextArea}
-//     value={values.newPostText}
-//     onChange={(e) => {
-//         handleChange(e);
-//     }}
-// />
