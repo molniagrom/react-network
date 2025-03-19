@@ -27,18 +27,23 @@ class App extends React.Component {
             return <Preloader/>;
         }
 
+        // const DialogsContainerWithSuspense = withSuspense(DialogsContainer);
+        // const ProfileContainerWithSuspense = withSuspense(ProfileContainer);
+        // const UsersContainerWithSuspense = withSuspense(UsersContainer);
+        // const LoginWithSuspense = withSuspense(Login);
+
         return (<div className="app-wrapper">
             <HeaderContainer/>
             <NavbarContainer/>
             <div className="app-wrapper-content">
                 <Routes>
-                    <Route path="/dialogs/*" element={withSuspense(DialogsContainer)}/>
-                    <Route path="/profile/:userID?/*" element={withSuspense(ProfileContainer)}/>
-                    <Route path="/news/*" element={<News/>}/>
-                    <Route path="/music/*" element={<Music/>}/>
-                    <Route path="/users/*" element={withSuspense(UsersContainer)}/>
-                    <Route path="/login/*" element={withSuspense(Login)}/>
-                    <Route path="/settings/*" element={<Settings/>}/>
+                    <Route path="/dialogs/*" element={withSuspense(DialogsContainer)()} />
+                    <Route path="/profile/:userID?/*" element={withSuspense(ProfileContainer)()} />
+                    <Route path="/news/*" element={<News />} />
+                    <Route path="/music/*" element={<Music />} />
+                    <Route path="/users/*" element={withSuspense(UsersContainer)()} />
+                    <Route path="/login/*" element={withSuspense(Login)()} />
+                    <Route path="/settings/*" element={<Settings />} />
                 </Routes>
             </div>
         </div>);
