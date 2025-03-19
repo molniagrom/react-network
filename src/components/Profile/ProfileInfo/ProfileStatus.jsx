@@ -34,12 +34,12 @@ export class ProfileStatus extends React.Component {
             <>
                 {!this.state.editMode && (
                     <div>
-                        <span onClick={this.activateEditMode}>{this.props.status || "---"}</span>
+                        <span data-testid="profile-span" onClick={this.activateEditMode}>{this.props.status || "---"}</span>
                     </div>
                 )}
                 {this.state.editMode && (
                     <div>
-                        <input onChange={this.onStatusChange} autoFocus onBlur={this.deactivateEditMode}
+                        <input data-testid="profile-input" onChange={this.onStatusChange} autoFocus onBlur={this.deactivateEditMode}
                                value={this.state.status}/>
                     </div>
                 )}

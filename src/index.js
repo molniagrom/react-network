@@ -3,9 +3,7 @@ import store from "./redux/redux-store";
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
-import {BrowserRouter} from "react-router-dom";
-import {Provider} from "react-redux";
+import SamuraiJSApp from "./App";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -19,14 +17,7 @@ root.render(
 //         Как оказалось сам компонент тут не причем. Всё дело
 //         в ReactStrictMode которым у меня был обернут App, в index.js. Этот стрикт мод помогает лучше
 //         отлавливать ошибки разработчикам, поэтому и рендерится по два раза. Если его убрать, рендер происходит один раз.
-
-    <React.StrictMode>
-        <BrowserRouter>
-            <Provider store={store}>
-                <App/>
-            </Provider>
-        </BrowserRouter>
-    </React.StrictMode>
+    <SamuraiJSApp/>
 );
 
 
