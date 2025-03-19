@@ -1,4 +1,4 @@
-import React, {lazy, Suspense} from "react";
+import React, {lazy} from "react";
 import "./App.css";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {News} from "./components/News/News";
@@ -26,11 +26,6 @@ class App extends React.Component {
         if (!this.props.initialized) {
             return <Preloader/>;
         }
-
-        // const DialogsContainerWithSuspense = withSuspense(DialogsContainer);
-        // const ProfileContainerWithSuspense = withSuspense(ProfileContainer);
-        // const UsersContainerWithSuspense = withSuspense(UsersContainer);
-        // const LoginWithSuspense = withSuspense(Login);
 
         return (<div className="app-wrapper">
             <HeaderContainer/>
