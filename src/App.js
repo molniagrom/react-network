@@ -1,6 +1,6 @@
 import React, {lazy} from "react";
 import "./App.css";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import { HashRouter, Route, Routes} from "react-router-dom";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
@@ -33,7 +33,7 @@ class App extends React.Component {
             <div className="app-wrapper-content">
                 <Routes>
                     <Route path="/dialogs/*" element={withSuspense(DialogsContainer)()} />
-                    <Route path="/profile/:userID?/*" element={withSuspense(ProfileContainer)()} />
+                    <Route index path="/profile/:userID?/*" element={withSuspense(ProfileContainer)()} />
                     <Route path="/news/*" element={<News />} />
                     <Route path="/music/*" element={<Music />} />
                     <Route path="/users/*" element={withSuspense(UsersContainer)()} />
@@ -54,11 +54,11 @@ let AppContainer = connect(mapStateToProps, {initializeApp})(App);
 let SamuraiJSApp = () => {
     return (
         <React.StrictMode>
-            <BrowserRouter basename={process.env.PUBLIC_URL}>
+            <HashRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }} >
                 <Provider store={store}>
                     <AppContainer/>
                 </Provider>
-            </BrowserRouter>
+            </HashRouter>
         </React.StrictMode>
     );
 };
