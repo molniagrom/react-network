@@ -10,7 +10,7 @@ export const ProfileInfo = (props) => {
     }
 
     const mainPhotoSelected = (e) => {
-        if(e.target.files.length){
+        if (e.target.files.length) {
             props.savePhoto(e.target.files[0]);
         }
     }
@@ -21,15 +21,24 @@ export const ProfileInfo = (props) => {
             <div className={s.descriptionBlock}>
                 <img src={props.profile.photos.large || userPhoto} alt="Avatar" className={s.avatar}/>
                 {props.isOwner &&
-                    <>
-                        <input className={s.fileUpload} onChange={mainPhotoSelected} type={"file"}/>
-                        <span>Выберите файл</span>
-                    </>
+                    <form method="post" encType="multipart/form-data">
+                        <div className={s.inputFileRow}>
+                            <label className={s.inputFile}>
+                                <input onChange={mainPhotoSelected} type="file" name="file[]" multiple
+                                       accept="image/*"/>
+                                <span>Выберите файл</span>
+                            </label>
+                            <div className={s.inputFileList}></div>
+                        </div>
+                    </form>
                 }
                 <div className={s.info}>
-                    <p><strong>Имя:</strong> {props.profile.fullName}</p>
-                    <p><strong>Работа:</strong> {props.profile.lookingForAJobDescription}</p>
-                    <p><strong>Обо мне:</strong> {props.profile.aboutMe}</p>d
+                    <p><strong>Name:</strong> {props.profile.fullName}</p>
+                    <p><strong>Looking for a job:</strong> {props.profile.lookingForAJob ? "yes" : "no"}</p>
+                    {props.profile.lookingForAJob &&
+                        <p><strong>My professional skills:</strong> {props.profile.lookingForAJobDescription}</p>
+                    }
+                    <p><strong>About me:</strong> {props.profile.aboutMe}</p>
                     <p><strong>userID:</strong> {props.profile.userId}</p>
                     {props.profile.contacts.instagram && (
                         <p>
