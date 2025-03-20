@@ -3,7 +3,6 @@ import s from "./Dialogs.module.css"
 import {DialogItem} from "./DialogItem/DialogsItem";
 import {Message} from "./Message/Message";
 import {EnteringMessages} from "./EnteringMessages/EnteringMessages";
-import {Navigate} from "react-router-dom";
 
 export const Dialogs = (props) => {
     // debugger
