@@ -1,9 +1,10 @@
 import {profileAPI, usersAPi} from "../api/api";
 
-const ADD_POST = "ADD-POST";
-const SET_USER_PROFILE = "SET_USER_PROFILE";
-const SET_STATUS = "SET_STATUS";
-const DELETE_POST = "DELETE_POST";
+const ADD_POST = "profileReducer/ADD-POST";
+const SET_USER_PROFILE = "profileReducer/SET_USER_PROFILE";
+const SET_STATUS = "profileReducer/SET_STATUS";
+const DELETE_POST = "profileReducer/DELETE_POST";
+const SAVE_PHOTO_SUCCESS = "profileReducer/SAVE_PHOTO_SUCCESS";
 
 export let initialState = {
     posts: [
@@ -51,6 +52,13 @@ export const profileReducer = (state = initialState, action) => {
             };
         }
 
+        case SAVE_PHOTO_SUCCESS: {
+            return {
+                ...state,
+                profile: {...state.profile, photos: action.photos},
+            };
+        }
+
         default:
             return state;
     }
@@ -61,22 +69,31 @@ export const addPostCreator = (newPostText) => ({type: ADD_POST, newPostText});
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
 export const setStatus = (status) => ({type: SET_STATUS, status});
 export const deletePost = (postId) => ({type: DELETE_POST, postId});
+export const savePhotoSuccess = (photos) => ({type: SAVE_PHOTO_SUCCESS, photos});
 
 export const getProfile = (userID) => async (dispatch) => {
-    const id = userID || 2
+    const id = userID || 32155
     let response = await usersAPi.getProfile(id)
     dispatch(setUserProfile(response))
 }
 
 export const getStatus = (userID) => async (dispatch) => {
-    const id = userID || 2
+    const id = userID || 32155
     let response = await profileAPI.getStatus(id)
     dispatch(setStatus(response))
 }
+
 export const upDateStatus = (status) => async (dispatch) => {
     // в response будет сидеть результат которым "за-resolve-ится" Promise, который возвращает function upDateStatus
     let response = await profileAPI.upDateStatus(status)
     if (response.resultCode === 0) {
         dispatch(setStatus(status))
+    }
+}
+export const savePhoto = (file) => async (dispatch) => {
+    let response = await profileAPI.savePhoto(file)
+
+    if (response.resultCode === 0) {
+        dispatch(savePhotoSuccess(response.data.photos))
     }
 }

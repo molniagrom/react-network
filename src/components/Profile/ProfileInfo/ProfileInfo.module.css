@@ -60,3 +60,23 @@
 .instagram:hover {
     color: #c82361;
 }
+
+
+
+
+
+
+
+.fileUpload {
+    display: inline-block;
+    background: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.fileUpload input {
+    display: none;
+}
+
