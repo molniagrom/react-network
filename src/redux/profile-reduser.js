@@ -19,6 +19,7 @@ export let initialState = {
     ],
     newPostText: "I'm happier than anyone...",
     profile: null,
+    serverErrors: [],
     status: "",
 };
 
@@ -64,6 +65,12 @@ export const profileReducer = (state = initialState, action) => {
             return { ...state, profile: action.profile };
         }
 
+        case "SET_USER_PROFILE":
+            return { ...state, profile: action.payload };
+        case "SET_SERVER_ERRORS":
+            return { ...state, serverErrors: action.payload };
+
+
         default:
             return state;
     }
@@ -76,6 +83,16 @@ export const setStatus = (status) => ({type: SET_STATUS, status});
 export const deletePost = (postId) => ({type: DELETE_POST, postId});
 export const savePhotoSuccess = (photos) => ({type: SAVE_PHOTO_SUCCESS, photos});
 // export const saveProfileSuccess = (profile) => ({ type: SAVE_PROFILE_SUCCESS, profile });
+
+export const setUserProfile2 = (profile) => ({
+    type: "SET_USER_PROFILE",
+    payload: profile,
+});
+
+export const setServerErrors = (errors) => ({
+    type: "SET_SERVER_ERRORS",
+    payload: errors,
+});
 
 export const getProfile = (userID) => async (dispatch) => {
     const id = userID || 32155
@@ -106,16 +123,21 @@ export const savePhoto = (file) => async (dispatch) => {
 }
 export const saveProfile = (profileData) => async (dispatch) => {
     try {
-debugger
         const response = await profileAPI.saveProfileToAPI(profileData);
         console.log("Ответ сервера:", response);
+
         if (response.resultCode === 0) {
-            dispatch(setUserProfile(profileData));
+            dispatch(setUserProfile2(profileData));
+            dispatch(setServerErrors([])); // Очистка ошибок при успешном сохранении
             console.log("Профиль обновлён в Redux:", profileData);
+        } else {
+            dispatch(setServerErrors(response.messages)); // Передаем ошибки из messages
         }
     } catch (error) {
         console.error("Ошибка при сохранении профиля:", error);
+        dispatch(setServerErrors(["Произошла ошибка при сохранении"]));
     }
 };
+
 
 
