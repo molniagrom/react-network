@@ -106,7 +106,6 @@ export const savePhoto = (file) => async (dispatch) => {
 }
 export const saveProfile = (profileData) => async (dispatch) => {
     try {
-debugger
         const response = await profileAPI.saveProfileToAPI(profileData);
         console.log("Ответ сервера:", response);
         if (response.resultCode === 0) {
