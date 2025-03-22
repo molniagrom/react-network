@@ -279,28 +279,6 @@
     transform: scale(0.95); /* Чуть уменьшается при клике */
 }
 
-/*...................................................*/
-
-.errorContainer {
-    background-color: #ffe6e6;
-    border: 1px solid red;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 5px;
-}
-
-.errorList {
-    list-style: none;
-    padding: 0;
-}
-
-.errorItem {
-    color: red;
-    font-size: 14px;
-    margin-bottom: 5px;
-}
-
-
 
 
 
