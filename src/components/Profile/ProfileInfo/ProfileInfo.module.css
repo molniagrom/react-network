@@ -61,7 +61,9 @@
     color: #c82361;
 }
 
-
+.contact{
+    padding-left: 10px;
+}
 
 
 
@@ -156,3 +158,140 @@
     line-height: 16px;
     border-radius: 50%;
 }
+
+/*..........................*/
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 24px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.label {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+.input {
+    margin-top: 4px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    outline: none;
+}
+
+.checkbox {
+    width: 18px;
+    height: 18px;
+    margin-top: 6px;
+    accent-color: #007bff;
+}
+
+.contactsBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.contactsTitle {
+    font-size: 16px;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 8px;
+}
+
+.contactItem {
+    display: flex;
+    flex-direction: column;
+}
+
+.button {
+    padding: 12px 18px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    background: #007bff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.button:hover {
+    background: #0056b3;
+}
+
+
+.inputError {
+    border: 2px solid red;
+    background-color: #ffe6e6;
+}
+
+.errorText {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.buttonEdite {
+    background-color: #4CAF50; /* Зеленый фон */
+    color: white; /* Белый текст */
+    border: none; /* Без рамки */
+    padding: 10px 20px; /* Внутренние отступы */
+    font-size: 16px; /* Размер шрифта */
+    cursor: pointer; /* Курсор в виде руки */
+    border-radius: 5px; /* Скругленные углы */
+    transition: background-color 0.3s, transform 0.2s; /* Плавные эффекты */
+    display: block; /* Делает кнопку блочным элементом */
+    margin: 0 auto; /* Центрирует кнопку по горизонтали */
+}
+
+.buttonEdite:hover {
+    background-color: #45a049; /* Темнее при наведении */
+    transform: scale(1.05); /* Немного увеличивается */
+}
+
+.buttonEdite:active {
+    background-color: #3e8e41; /* Ещё темнее при нажатии */
+    transform: scale(0.95); /* Чуть уменьшается при клике */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

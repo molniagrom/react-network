@@ -1,58 +1,76 @@
-import React from "react";
+import React, { useState } from "react";
 import s from "./ProfileInfo.module.css";
-import {Preloader} from "../../common/Preloader/Preloader";
-import {ProfileStatusWithHooks} from "./ProfileStatusWithHooks";
+import { Preloader } from "../../common/Preloader/Preloader";
 import userPhoto from "../../../assets/images/user.jpg";
+import { ProfileDataForm } from "./ProfileDataForm";
+import { ProfileData } from "./ProfileData";
 
-export const ProfileInfo = (props) => {
-    if (!props.profile) {
-        return <Preloader/>
+export const ProfileInfo = ({ profile, isOwner, savePhoto, saveProfile}) => {
+    // console.log(profile);
+    const [editMode, setEditMode] = useState(false);
+
+    if (!profile) {
+        return <Preloader />;
     }
 
     const mainPhotoSelected = (e) => {
-        if (e.target.files.length) {
-            props.savePhoto(e.target.files[0]);
+        if (e.target.files.length > 0) {
+            savePhoto(e.target.files[0]);
         }
-    }
+    };
+
+    const onSubmit = async (formData) => {
+        try {
+            console.log("Сохранённые данные:", formData);
+            saveProfile(formData);
+            setEditMode(false);
+
+        } catch (error) {
+            console.error("Ошибка при сохранении профиля:", error);
+        }
+    };
 
     return (
         <div>
-            <ProfileStatusWithHooks status={props.status} upDateStatus={props.upDateStatus}/>
             <div className={s.descriptionBlock}>
-                <img src={props.profile.photos.large || userPhoto} alt="Avatar" className={s.avatar}/>
-                {props.isOwner &&
+                <img
+                    src={profile.photos.large || userPhoto}
+                    alt="Avatar"
+                    className={s.avatar}
+                />
+                {isOwner && (
                     <form method="post" encType="multipart/form-data">
                         <div className={s.inputFileRow}>
                             <label className={s.inputFile}>
-                                <input onChange={mainPhotoSelected} type="file" name="file[]" multiple
-                                       accept="image/*"/>
+                                <input
+                                    onChange={mainPhotoSelected}
+                                    type="file"
+                                    name="file[]"
+                                    multiple
+                                    accept="image/*"
+                                />
                                 <span>Выберите файл</span>
                             </label>
                             <div className={s.inputFileList}></div>
                         </div>
                     </form>
-                }
-                <div className={s.info}>
-                    <p><strong>Name:</strong> {props.profile.fullName}</p>
-                    <p><strong>Looking for a job:</strong> {props.profile.lookingForAJob ? "yes" : "no"}</p>
-                    {props.profile.lookingForAJob &&
-                        <p><strong>My professional skills:</strong> {props.profile.lookingForAJobDescription}</p>
-                    }
-                    <p><strong>About me:</strong> {props.profile.aboutMe}</p>
-                    <p><strong>userID:</strong> {props.profile.userId}</p>
-                    {props.profile.contacts.instagram && (
-                        <p>
-                            <strong>Instagram:</strong>
-                            <a href={`https://instagram.com/${props.profile.contacts.instagram}`}
-                               target="_blank"
-                               rel="noopener noreferrer"
-                               className={s.instagram}>
-                                {` @${props.profile.contacts.instagram}`}
-                            </a>
-                        </p>
-                    )}
-                </div>
+                )}
+                {editMode ? (
+                    <ProfileDataForm profile={profile} onSubmit={onSubmit} />
+                ) : (
+                    <ProfileData
+                        goToEditeMode={() => setEditMode(true)}
+                        profile={profile}
+                        isOwner={isOwner}
+                    />
+                )}
             </div>
         </div>
-    )
-}
+    );
+};
+
+export const Contact = ({ contactTitle, contactValue }) => (
+    <div className={s.contact}>
+        <b>{contactTitle}</b>: {contactValue || "—"}
+    </div>
+);
