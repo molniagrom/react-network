@@ -3,7 +3,7 @@ import {authAPI as authAPi} from "../api/api";
 // Делаем более уникальные actions (redux-ducks)
 
 const SET_USER_DATA = "auth/SET_USER_DATA";
-const SET_ERROR = 'auth/SET_ERROR';
+export const SET_ERROR = 'auth/SET_ERROR';
 
 
 let initialState = {

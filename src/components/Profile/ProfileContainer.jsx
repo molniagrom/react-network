@@ -33,6 +33,7 @@ class ProfileContainer extends React.Component {
                     savePhoto={this.props.savePhoto}
                     isOwner={!this.props.userID}
                     {...this.props}
+                    error={this.props.error}
                     profile={this.props.profile}
                     status={this.props.status}
                     upDateStatus={this.props.upDateStatus}/>
@@ -55,6 +56,7 @@ let mapStateToProps = (state) => {
         profile: state.profilePage.profile,
         status: state.profilePage.status,
         authUserID: state.auth.userID,
+        error: state.profilePage.error,
     })
 
 }

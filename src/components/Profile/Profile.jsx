@@ -7,6 +7,7 @@ export const Profile = (props) => {
     return (
         <div>
             <ProfileInfo
+                error={props.error}
                 saveProfile={props.saveProfile}
                 savePhoto={props.savePhoto}
                 isOwner={props.isOwner}

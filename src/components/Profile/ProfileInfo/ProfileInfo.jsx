@@ -5,8 +5,7 @@ import userPhoto from "../../../assets/images/user.jpg";
 import { ProfileDataForm } from "./ProfileDataForm";
 import { ProfileData } from "./ProfileData";
 
-export const ProfileInfo = ({ profile, isOwner, savePhoto, saveProfile}) => {
-    // console.log(profile);
+export const ProfileInfo = ({ error, profile, isOwner, savePhoto, saveProfile}) => {
     const [editMode, setEditMode] = useState(false);
 
     if (!profile) {
@@ -24,7 +23,11 @@ export const ProfileInfo = ({ profile, isOwner, savePhoto, saveProfile}) => {
             console.log("Сохранённые данные:", formData);
             saveProfile(formData);
             setEditMode(false);
-
+            if (error) {
+                setEditMode(true);
+            } else {
+                setEditMode(false);
+            }
         } catch (error) {
             console.error("Ошибка при сохранении профиля:", error);
         }
@@ -56,7 +59,7 @@ export const ProfileInfo = ({ profile, isOwner, savePhoto, saveProfile}) => {
                     </form>
                 )}
                 {editMode ? (
-                    <ProfileDataForm profile={profile} onSubmit={onSubmit} />
+                    <ProfileDataForm error={error} profile={profile} onSubmit={onSubmit} />
                 ) : (
                     <ProfileData
                         goToEditeMode={() => setEditMode(true)}

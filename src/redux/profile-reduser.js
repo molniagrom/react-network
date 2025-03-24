@@ -6,6 +6,7 @@ const SET_STATUS = "profileReducer/SET_STATUS";
 const DELETE_POST = "profileReducer/DELETE_POST";
 const SAVE_PHOTO_SUCCESS = "profileReducer/SAVE_PHOTO_SUCCESS";
 const SAVE_PROFILE_SUCCESS = "profileReducer/SAVE_PROFILE_SUCCESS";
+const SET_ERROR = "profileReducer/SET_ERROR"; // Добавь константу
 
 export let initialState = {
     posts: [
@@ -20,6 +21,7 @@ export let initialState = {
     newPostText: "I'm happier than anyone...",
     profile: null,
     status: "",
+    error: "", // добавлено
 };
 
 export const profileReducer = (state = initialState, action) => {
@@ -45,6 +47,12 @@ export const profileReducer = (state = initialState, action) => {
         case SET_STATUS: {
             return {...state, status: action.status};
         }
+
+        case SET_ERROR: // Добавляем обработку ошибки
+            return {
+                ...state,
+                error: action.errorMessage,
+            };
 
         case DELETE_POST: {
             return {
@@ -75,7 +83,7 @@ export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
 export const setStatus = (status) => ({type: SET_STATUS, status});
 export const deletePost = (postId) => ({type: DELETE_POST, postId});
 export const savePhotoSuccess = (photos) => ({type: SAVE_PHOTO_SUCCESS, photos});
-// export const saveProfileSuccess = (profile) => ({ type: SAVE_PROFILE_SUCCESS, profile });
+export const setError = (errorMessage) => ({ type: SET_ERROR, errorMessage });
 
 export const getProfile = (userID) => async (dispatch) => {
     const id = userID || 32155
@@ -111,6 +119,9 @@ export const saveProfile = (profileData) => async (dispatch) => {
         if (response.resultCode === 0) {
             dispatch(setUserProfile(profileData));
             console.log("Профиль обновлён в Redux:", profileData);
+        } else {
+            dispatch(setError(response.messages[0]));
+            console.log(response.messages[0])
         }
     } catch (error) {
         console.error("Ошибка при сохранении профиля:", error);

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import s from "./ProfileInfo.module.css";
 
-export const ProfileDataForm = ({ profile, onSubmit }) => {
+export const ProfileDataForm = ({ profile, onSubmit, error }) => {
     const {
         register,
         handleSubmit,
@@ -81,6 +81,9 @@ export const ProfileDataForm = ({ profile, onSubmit }) => {
                             </div>
                         ))}
                 </div>
+
+                {error && <div className={s.formSummaryError}>{error}</div>}
+
 
                 <button type="submit" className={s.button}>Save</button>
             </div>
