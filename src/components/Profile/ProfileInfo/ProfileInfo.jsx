@@ -19,24 +19,6 @@ export const ProfileInfo = ({error, profile, isOwner, savePhoto, saveProfile}) =
         }
     };
 
-    // const onSubmit = async (formData, event, errors) => {
-    //     event.preventDefault();
-    //     console.log("Сохранённые данные:", formData);
-    //
-    //     if (Object.keys(errors).length > 0) { // Проверка на ошибки из useForm
-    //         console.log("Форма содержит ошибки. Режим редактирования не отключаем.");
-    //         return;
-    //     }
-    //
-    //     try {
-    //         await saveProfile(formData);
-    //         setEditMode(false); // Если нет ошибок, выключаем режим редактирования
-    //     } catch (error) {
-    //         console.error("Ошибка при сохранении профиля:", error);
-    //         setEditMode(true);
-    //     }
-    // };
-
     const onSubmit = async () => {
         const response = await saveProfile();
 
