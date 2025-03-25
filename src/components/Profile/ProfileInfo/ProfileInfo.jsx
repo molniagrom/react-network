@@ -4,10 +4,10 @@ import {Preloader} from "../../common/Preloader/Preloader";
 import userPhoto from "../../../assets/images/user.jpg";
 import {ProfileDataForm} from "./ProfileDataForm";
 import {ProfileData} from "./ProfileData";
-import {setError} from "../../../redux/profile-reduser";
 
 export const ProfileInfo = ({error, profile, isOwner, savePhoto, saveProfile}) => {
     const [editMode, setEditMode] = useState(false);
+    const [localError, setLocalError] = useState(null); // Добавляем локальный state для ошибки
 
     if (!profile) {
         return <Preloader/>;
@@ -40,11 +40,11 @@ export const ProfileInfo = ({error, profile, isOwner, savePhoto, saveProfile}) =
     const onSubmit = async () => {
         const response = await saveProfile();
 
-        if (response.message?.length) {
-            setError(response.message); // Показываем ошибку
-            return; // Не выходим из режима редактирования
+        if (response?.message?.length) {
+            setLocalError(response.message); // Запоминаем ошибку
+            return; // Не выключаем режим редактирования
         }
-
+        setLocalError(null); // Очищаем ошибку, если всё прошло успешно
         setEditMode(false); // Только если ошибок нет
     };
 
@@ -75,7 +75,7 @@ export const ProfileInfo = ({error, profile, isOwner, savePhoto, saveProfile}) =
                     </form>
                 )}
                 {editMode ? (
-                    <ProfileDataForm error={error} profile={profile} onSubmit={onSubmit}/>
+                    <ProfileDataForm error={localError} profile={profile} onSubmit={onSubmit}/>
                 ) : (
                     <ProfileData
                         goToEditeMode={() => setEditMode(true)}
