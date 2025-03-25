@@ -7,10 +7,11 @@ export const ProfileDataForm = ({ profile, onSubmit, error }) => {
         register,
         handleSubmit,
         reset,
-        formState: { errors }, // Получаем ошибки валидации
+        formState: { errors  }, // Получаем ошибки валидации
     } = useForm({
         defaultValues: profile, // Загружаем данные профиля
         mode: "onBlur", // Проверка при потере фокуса
+        criteriaMode: "all",
     });
 
     // Обновляем форму при изменении profile
@@ -19,7 +20,7 @@ export const ProfileDataForm = ({ profile, onSubmit, error }) => {
     }, [profile, reset]);
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
+        <form onSubmit={handleSubmit((formData, event) => onSubmit(formData, event, errors))} className={s.form}>
             <div className={s.info}>
                 <label className={s.label}>
                     <strong>Name:</strong>
@@ -70,7 +71,7 @@ export const ProfileDataForm = ({ profile, onSubmit, error }) => {
                                     className={`${s.input} ${errors.contacts?.[key] ? s.inputError : ""}`}
                                     {...register(`contacts.${key}`, {
                                         pattern: {
-                                            value: /^https?:\/\/[\w.-]+(?:\.[\w.-]+)+[\w-._~:/?#[\]@!$&'()*+,;=]+$/,
+                                            value: /^(https?:\/\/)?(www\.)?[\w.-]+\.\w{2,}([\/?#][\w-.~:/?#[\]@!$&'()*+,;=]*)?$/,
                                             message: "Enter a valid URL",
                                         },
                                     })}
@@ -83,7 +84,6 @@ export const ProfileDataForm = ({ profile, onSubmit, error }) => {
                 </div>
 
                 {error && <div className={s.formSummaryError}>{error}</div>}
-
 
                 <button type="submit" className={s.button}>Save</button>
             </div>

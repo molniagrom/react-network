@@ -125,6 +125,7 @@ export const saveProfile = (profileData) => async (dispatch) => {
         }
     } catch (error) {
         console.error("Ошибка при сохранении профиля:", error);
+        return error
     }
 };
 

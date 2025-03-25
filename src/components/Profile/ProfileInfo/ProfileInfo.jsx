@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import s from "./ProfileInfo.module.css";
-import { Preloader } from "../../common/Preloader/Preloader";
+import {Preloader} from "../../common/Preloader/Preloader";
 import userPhoto from "../../../assets/images/user.jpg";
-import { ProfileDataForm } from "./ProfileDataForm";
-import { ProfileData } from "./ProfileData";
+import {ProfileDataForm} from "./ProfileDataForm";
+import {ProfileData} from "./ProfileData";
+import {setError} from "../../../redux/profile-reduser";
 
-export const ProfileInfo = ({ error, profile, isOwner, savePhoto, saveProfile}) => {
+export const ProfileInfo = ({error, profile, isOwner, savePhoto, saveProfile}) => {
     const [editMode, setEditMode] = useState(false);
 
     if (!profile) {
-        return <Preloader />;
+        return <Preloader/>;
     }
 
     const mainPhotoSelected = (e) => {
@@ -18,20 +19,35 @@ export const ProfileInfo = ({ error, profile, isOwner, savePhoto, saveProfile}) 
         }
     };
 
-    const onSubmit = async (formData) => {
-        try {
-            console.log("Сохранённые данные:", formData);
-            saveProfile(formData);
-            setEditMode(false);
-            if (error) {
-                setEditMode(true);
-            } else {
-                setEditMode(false);
-            }
-        } catch (error) {
-            console.error("Ошибка при сохранении профиля:", error);
+    // const onSubmit = async (formData, event, errors) => {
+    //     event.preventDefault();
+    //     console.log("Сохранённые данные:", formData);
+    //
+    //     if (Object.keys(errors).length > 0) { // Проверка на ошибки из useForm
+    //         console.log("Форма содержит ошибки. Режим редактирования не отключаем.");
+    //         return;
+    //     }
+    //
+    //     try {
+    //         await saveProfile(formData);
+    //         setEditMode(false); // Если нет ошибок, выключаем режим редактирования
+    //     } catch (error) {
+    //         console.error("Ошибка при сохранении профиля:", error);
+    //         setEditMode(true);
+    //     }
+    // };
+
+    const onSubmit = async () => {
+        const response = await saveProfile();
+
+        if (response.message?.length) {
+            setError(response.message); // Показываем ошибку
+            return; // Не выходим из режима редактирования
         }
+
+        setEditMode(false); // Только если ошибок нет
     };
+
 
     return (
         <div>
@@ -59,7 +75,7 @@ export const ProfileInfo = ({ error, profile, isOwner, savePhoto, saveProfile}) 
                     </form>
                 )}
                 {editMode ? (
-                    <ProfileDataForm error={error} profile={profile} onSubmit={onSubmit} />
+                    <ProfileDataForm error={error} profile={profile} onSubmit={onSubmit}/>
                 ) : (
                     <ProfileData
                         goToEditeMode={() => setEditMode(true)}
@@ -72,7 +88,7 @@ export const ProfileInfo = ({ error, profile, isOwner, savePhoto, saveProfile}) 
     );
 };
 
-export const Contact = ({ contactTitle, contactValue }) => (
+export const Contact = ({contactTitle, contactValue}) => (
     <div className={s.contact}>
         <b>{contactTitle}</b>: {contactValue || "—"}
     </div>
