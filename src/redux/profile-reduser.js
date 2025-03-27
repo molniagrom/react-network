@@ -111,22 +111,24 @@ export const savePhoto = (file) => async (dispatch) => {
     if (response.resultCode === 0) {
         dispatch(savePhotoSuccess(response.data.photos))
     }
-}
-export const saveProfile = (profileData) => async (dispatch) => {
-    try {
-        const response = await profileAPI.saveProfileToAPI(profileData);
-        console.log("Ответ сервера:", response);
-        if (response.resultCode === 0) {
-            dispatch(setUserProfile(profileData));
-            console.log("Профиль обновлён в Redux:", profileData);
-        } else {
-            dispatch(setError(response.messages[0]));
-            console.log(response.messages[0])
-        }
-    } catch (error) {
-        console.error("Ошибка при сохранении профиля:", error);
-        return error
-    }
+} 
+export const saveProfile = (profileData) => (dispatch) => {
+    return profileAPI.saveProfileToAPI(profileData)
+        .then(response => {
+            console.log("Ответ сервера:", response);
+            if (response.resultCode === 0) {
+                dispatch(setUserProfile(profileData));
+                console.log("Профиль обновлён в Redux:", profileData);
+            } else {
+                dispatch(setError(response.messages[0]));
+                console.log(response.messages[0]);
+                return Promise.reject(new Error(response.messages[0]));
+            }
+        })
+        .catch(error => {
+            console.error("Ошибка при сохранении профиля:", error);
+            return Promise.reject(error);
+        });
 };
 
 

@@ -19,15 +19,19 @@ export const ProfileInfo = ({error, profile, isOwner, savePhoto, saveProfile}) =
         }
     };
 
-    const onSubmit = async () => {
-        const response = await saveProfile();
-
-        if (response?.message?.length) {
-            setLocalError(response.message); // Запоминаем ошибку
-            return; // Не выключаем режим редактирования
-        }
-        setLocalError(null); // Очищаем ошибку, если всё прошло успешно
-        setEditMode(false); // Только если ошибок нет
+    const onSubmit = (formData) => {
+        saveProfile(formData)
+            .then(response => {
+                if (response?.message?.length) {
+                    setLocalError(response.message);
+                    return;
+                }
+                setLocalError(null);
+                setEditMode(false);
+            })
+            .catch(error => {
+                console.error("Ошибка при сохранении профиля:", error);
+            });
     };
 
 
@@ -57,7 +61,7 @@ export const ProfileInfo = ({error, profile, isOwner, savePhoto, saveProfile}) =
                     </form>
                 )}
                 {editMode ? (
-                    <ProfileDataForm error={localError} profile={profile} onSubmit={onSubmit}/>
+                    <ProfileDataForm error={localError || error} profile={profile} onSubmit={onSubmit}/>
                 ) : (
                     <ProfileData
                         goToEditeMode={() => setEditMode(true)}
