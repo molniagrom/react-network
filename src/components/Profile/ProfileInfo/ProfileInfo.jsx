@@ -1,16 +1,21 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import s from "./ProfileInfo.module.css";
-import {Preloader} from "../../common/Preloader/Preloader";
+import { Preloader } from "../../common/Preloader/Preloader";
 import userPhoto from "../../../assets/images/user.jpg";
-import {ProfileDataForm} from "./ProfileDataForm";
-import {ProfileData} from "./ProfileData";
+import { ProfileDataForm } from "./ProfileDataForm";
+import { ProfileData } from "./ProfileData";
 
-export const ProfileInfo = ({error, profile, isOwner, savePhoto, saveProfile}) => {
+export const ProfileInfo = ({ error, profile, isOwner, savePhoto, saveProfile }) => {
     const [editMode, setEditMode] = useState(false);
-    const [localError, setLocalError] = useState(null); // Добавляем локальный state для ошибки
+
+    useEffect(() => {
+        if (!error) {
+            setEditMode(false);
+        }
+    }, [error]);
 
     if (!profile) {
-        return <Preloader/>;
+        return <Preloader />;
     }
 
     const mainPhotoSelected = (e) => {
@@ -20,20 +25,10 @@ export const ProfileInfo = ({error, profile, isOwner, savePhoto, saveProfile}) =
     };
 
     const onSubmit = (formData) => {
-        saveProfile(formData)
-            .then(response => {
-                if (response?.message?.length) {
-                    setLocalError(response.message);
-                    return;
-                }
-                setLocalError(null);
-                setEditMode(false);
-            })
-            .catch(error => {
-                console.error("Ошибка при сохранении профиля:", error);
-            });
+        saveProfile(formData).catch((err) => {
+            console.error("Ошибка при сохранении профиля:", err);
+        });
     };
-
 
     return (
         <div>
@@ -61,7 +56,7 @@ export const ProfileInfo = ({error, profile, isOwner, savePhoto, saveProfile}) =
                     </form>
                 )}
                 {editMode ? (
-                    <ProfileDataForm error={localError || error} profile={profile} onSubmit={onSubmit}/>
+                    <ProfileDataForm error={error} profile={profile} onSubmit={onSubmit} />
                 ) : (
                     <ProfileData
                         goToEditeMode={() => setEditMode(true)}
@@ -74,7 +69,7 @@ export const ProfileInfo = ({error, profile, isOwner, savePhoto, saveProfile}) =
     );
 };
 
-export const Contact = ({contactTitle, contactValue}) => (
+export const Contact = ({ contactTitle, contactValue }) => (
     <div className={s.contact}>
         <b>{contactTitle}</b>: {contactValue || "—"}
     </div>
