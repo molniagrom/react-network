@@ -56,7 +56,7 @@ let SamuraiJSApp = () => {
         <React.StrictMode>
             <HashRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }} >
                 <Provider store={store}>
-                    <AppContainer/>
+                    <AppContainer />
                 </Provider>
             </HashRouter>
         </React.StrictMode>
