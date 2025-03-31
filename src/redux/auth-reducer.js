@@ -1,8 +1,9 @@
-import {authAPI as authAPi} from "../api/api";
+import {authAPI as authAPi, securityAPI} from "../api/api";
 
 // Делаем более уникальные actions (redux-ducks)
 
 const SET_USER_DATA = "auth/SET_USER_DATA";
+const GET_CAPTCHA_URL_SUCCESS = "auth/GET_CAPTCHA_URL_SUCCESS";
 export const SET_ERROR = 'auth/SET_ERROR';
 
 
@@ -11,22 +12,21 @@ let initialState = {
     email: null,
     login: null,
     isAuth: false,
+    captchaUrl: null
 };
 
 // debugger
 export const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_USER_DATA:
-            // debugger
+        case SET_ERROR:
+        case GET_CAPTCHA_URL_SUCCESS:
+
             return {
                 ...state,
                 ...action.payload,
             };
-        case SET_ERROR:
-            return {
-                ...state,
-                errorAuth: action.payload,
-            }
+
         default:
             return state;
     }
@@ -36,6 +36,11 @@ export const authReducer = (state = initialState, action) => {
 export const setAuthUserData = (userID, email, login, isAuth) => ({
     type: SET_USER_DATA,
     payload: {userID, email, login, isAuth}
+});
+
+export const getCaptchaUrlSuccess = (captchaUrl) => ({
+    type: GET_CAPTCHA_URL_SUCCESS,
+    payload: {captchaUrl}
 });
 export const setError = (errorMessage) => {
     return {
@@ -54,14 +59,17 @@ export const getAuthMeThunk = () => async (dispatch) => {
 
 };
 
-export const login = (email, password, rememberMe) => async (dispatch) => {
+export const login = (email, password, rememberMe, captcha) => async (dispatch) => {
     try {
-        let response = await authAPi.login(email, password, rememberMe);
+        let response = await authAPi.login(email, password, rememberMe, captcha);
 
         if (response.status === 200 || response.resultCode === 0) {
             dispatch(getAuthMeThunk());
             dispatch(setError(null)); // Убираем ошибку, если вход успешен
         } else {
+            if(response.resultCode === 10){
+                dispatch(getCaptchaUrl())
+            }
             const errorMessage = response.messages?.[0] || "Ошибка авторизации";
             dispatch(setError(errorMessage));
         }
@@ -88,3 +96,11 @@ export const logout = () => async (dispatch) => {
         console.error("Ошибка при выходе:", error);
     }
 };
+
+export const getCaptchaUrl = () => async (dispatch) => {
+    const response = await securityAPI.getCaptchaURL()
+    const captchaUrl = response.url
+    dispatch(getCaptchaUrlSuccess(captchaUrl));
+}
+
+
