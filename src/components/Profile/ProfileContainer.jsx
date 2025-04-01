@@ -54,6 +54,7 @@ function ProfileContainerWrapper(props) {
 let mapStateToProps = (state) => {
     return ({
         profile: state.profilePage.profile,
+        profilePage: state.profilePage,
         status: state.profilePage.status,
         authUserID: state.auth.userID,
         error: state.profilePage.error,

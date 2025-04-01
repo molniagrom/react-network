@@ -1,6 +1,6 @@
 import React, {lazy} from "react";
 import "./App.css";
-import { HashRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
@@ -39,6 +39,9 @@ class App extends React.Component {
                     <Route path="/users/*" element={withSuspense(UsersContainer)()} />
                     <Route path="/login/*" element={withSuspense(Login)()} />
                     <Route path="/settings/*" element={<Settings />} />
+                    {/*<Route path="/react-network/*" element={<Navigate to="/profile/:userID?/*" />} />*/}
+                    <Route path="*" element={<div>404 not found</div>} />
+                    <Route path="/react-network/*" element={<Navigate to="/profile/:userID?/*" />} />
                 </Routes>
             </div>
         </div>);
@@ -54,11 +57,11 @@ let AppContainer = connect(mapStateToProps, {initializeApp})(App);
 let SamuraiJSApp = () => {
     return (
         <React.StrictMode>
-            <HashRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }} >
+            <BrowserRouter>
                 <Provider store={store}>
                     <AppContainer />
                 </Provider>
-            </HashRouter>
+            </BrowserRouter>
         </React.StrictMode>
     );
 };

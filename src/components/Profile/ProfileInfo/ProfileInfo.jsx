@@ -5,7 +5,7 @@ import userPhoto from "../../../assets/images/user.jpg";
 import { ProfileDataForm } from "./ProfileDataForm";
 import { ProfileData } from "./ProfileData";
 
-export const ProfileInfo = ({ error, profile, isOwner, savePhoto, saveProfile }) => {
+export const ProfileInfo = ({ error, profile, isOwner, savePhoto, saveProfile, status, upDateStatus }) => {
     const [editMode, setEditMode] = useState(false);
 
     useEffect(() => {
@@ -38,6 +38,7 @@ export const ProfileInfo = ({ error, profile, isOwner, savePhoto, saveProfile })
                     alt="Avatar"
                     className={s.avatar}
                 />
+                {/*<p>status: {status}</p>*/}
                 {isOwner && (
                     <form method="post" encType="multipart/form-data">
                         <div className={s.inputFileRow}>
