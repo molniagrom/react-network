@@ -18,8 +18,19 @@ const UsersContainer = lazy(() => import("./components/Users/UsersContainer"));
 const Login = lazy(() => import("./components/Login/Login"));
 
 class App extends React.Component {
+
+    catchAllUnhandledErrors = (promiseRejectionEvent) => {
+        alert("Some error current")
+        // todo: make dispatch thunk in app-reducer something globalError, and if globalError have text - display it
+    }
+
     componentDidMount() {
         this.props.initializeApp();
+        window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors)
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors)
     }
 
     render() {

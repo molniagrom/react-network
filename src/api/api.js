@@ -37,11 +37,19 @@ export const profileAPI = {
         return instance.get(`profile/status/${userID}`)
             .then(response => response.data);
     },
-    upDateStatus(status) {
-        return instance.put(`profile/status`, {
-            status: status
-        })
-            .then(response => response.data);
+    async upDateStatus(status) {
+        try {
+            const response = await instance.put(`profile/status`, {
+                status: status
+            })
+            return response.data;
+        } catch (error) {
+            debugger
+            console.error("Ошибка при обновлении статуса:", error);
+            throw error;
+            // todo: can dispatch an error
+
+        }
     },
     savePhoto(photo) {
         let formData = new FormData();

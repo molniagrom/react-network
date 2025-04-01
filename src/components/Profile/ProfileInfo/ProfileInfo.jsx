@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import s from "./ProfileInfo.module.css";
-import { Preloader } from "../../common/Preloader/Preloader";
+import {Preloader} from "../../common/Preloader/Preloader";
 import userPhoto from "../../../assets/images/user.jpg";
-import { ProfileDataForm } from "./ProfileDataForm";
-import { ProfileData } from "./ProfileData";
+import {ProfileDataForm} from "./ProfileDataForm";
+import {ProfileData} from "./ProfileData";
+import {ProfileStatusWithHooks} from "./ProfileStatusWithHooks";
 
-export const ProfileInfo = ({ error, profile, isOwner, savePhoto, saveProfile, status, upDateStatus }) => {
+export const ProfileInfo = ({error, profile, isOwner, savePhoto, saveProfile, status, upDateStatus}) => {
     const [editMode, setEditMode] = useState(false);
 
     useEffect(() => {
@@ -15,7 +16,7 @@ export const ProfileInfo = ({ error, profile, isOwner, savePhoto, saveProfile, s
     }, [error]);
 
     if (!profile) {
-        return <Preloader />;
+        return <Preloader/>;
     }
 
     const mainPhotoSelected = (e) => {
@@ -38,7 +39,11 @@ export const ProfileInfo = ({ error, profile, isOwner, savePhoto, saveProfile, s
                     alt="Avatar"
                     className={s.avatar}
                 />
-                {/*<p>status: {status}</p>*/}
+                <span>Status:</span>
+
+                {status
+                    ? <ProfileStatusWithHooks status={status} upDateStatus={upDateStatus}/>
+                    : <span>---</span>}
                 {isOwner && (
                     <form method="post" encType="multipart/form-data">
                         <div className={s.inputFileRow}>
@@ -57,7 +62,7 @@ export const ProfileInfo = ({ error, profile, isOwner, savePhoto, saveProfile, s
                     </form>
                 )}
                 {editMode ? (
-                    <ProfileDataForm error={error} profile={profile} onSubmit={onSubmit} />
+                    <ProfileDataForm error={error} profile={profile} onSubmit={onSubmit}/>
                 ) : (
                     <ProfileData
                         goToEditeMode={() => setEditMode(true)}
@@ -70,7 +75,7 @@ export const ProfileInfo = ({ error, profile, isOwner, savePhoto, saveProfile, s
     );
 };
 
-export const Contact = ({ contactTitle, contactValue }) => (
+export const Contact = ({contactTitle, contactValue}) => (
     <div className={s.contact}>
         <b>{contactTitle}</b>: {contactValue || "—"}
     </div>
