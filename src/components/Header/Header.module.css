@@ -1,22 +1,58 @@
 
 .header {
-  grid-area: h;
-  /*width: 120%;*/
-  background-color: green;
+    grid-area: h;
+    background-color: green;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
 }
 
-.header img {
-  width: 40px;
-  position: absolute;
-  top: 50%;
-  top: 1.5%;
-  left: 4%;
+.logo {
+    width: 40px;
+    position: absolute;
+    top: 50%;
+    top: 1.5%;
+    left: 4%;
 }
 
-.loginBlock{
-  float: right;
+.loginBlock {
+    float: right;
+    min-width: 29%;
+
 }
 
 .loginBlock a {
-  color: white;
+    color: white;
 }
+
+.myAvatar {
+    width: 40px; /* Добавляем стиль для картинки рядом с логином */
+    vertical-align: middle; /* Выравниваем по центру */
+    /*margin: 0px 10px 0px 0px;*/
+}
+
+.myInfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10%;
+    padding: 0px 10% 0px 0px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
