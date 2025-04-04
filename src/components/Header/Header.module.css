@@ -29,7 +29,6 @@
 .myAvatar {
     width: 40px; /* Добавляем стиль для картинки рядом с логином */
     vertical-align: middle; /* Выравниваем по центру */
-    /*margin: 0px 10px 0px 0px;*/
 }
 
 .myInfo {
