@@ -28,7 +28,7 @@ export const ProfileStatusWithHooks = (props) => {
         }
         {editMode && (
             <div>
-                <input
+                <textarea
                     onChange={onStatusChange}
                     value={status}
                     onBlur={deactivateEditMode} autoFocus/>
