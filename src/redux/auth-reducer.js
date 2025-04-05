@@ -1,10 +1,11 @@
-import {authAPI as authAPi, securityAPI} from "../api/api";
+import {authAPI as authAPi, securityAPI, usersAPi as usersAPI} from "../api/api";
 
 // Делаем более уникальные actions (redux-ducks)
 
 const SET_USER_DATA = "auth/SET_USER_DATA";
 const GET_CAPTCHA_URL_SUCCESS = "auth/GET_CAPTCHA_URL_SUCCESS";
 export const SET_ERROR = 'auth/SET_ERROR';
+const SET_MY_PROFILE = "auth/SET_MY_PROFILE";
 
 
 let initialState = {
@@ -12,7 +13,8 @@ let initialState = {
     email: null,
     login: null,
     isAuth: false,
-    captchaUrl: null
+    captchaUrl: null,
+    myAvatar: null,
 };
 
 // debugger
@@ -27,15 +29,21 @@ export const authReducer = (state = initialState, action) => {
                 ...action.payload,
             };
 
+        case SET_MY_PROFILE:
+
+            return {
+                ...state,
+                myProfile: action.profile
+            };
         default:
             return state;
     }
 };
 
 // actions
-export const setAuthUserData = (userID, email, login, isAuth) => ({
+export const setAuthUserData = (id, email, login, isAuth) => ({
     type: SET_USER_DATA,
-    payload: {userID, email, login, isAuth}
+    payload: {userID: id, email, login, isAuth}
 });
 
 export const getCaptchaUrlSuccess = (captchaUrl) => ({
@@ -48,17 +56,24 @@ export const setError = (errorMessage) => {
         payload: errorMessage
     };
 }
+export const setMyProfile = (profile) => (
+    {type: SET_MY_PROFILE, profile}
+);
+
 
 export const getAuthMeThunk = () => async (dispatch) => {
-    let response = await authAPi.getMe()
+    let response = await authAPi.getMe();
 
     if (response.status === 200 || response.resultCode === 0) {
         const {id, email, login} = response.data;
-        dispatch(setAuthUserData(id, email, login, true));
+        await dispatch(setAuthUserData(id, email, login, true));
     }
 
+    return response; // 💡 ВАЖНО: верни результат
 };
 
+
+// thunk
 export const login = (email, password, rememberMe, captcha) => async (dispatch) => {
     try {
         let response = await authAPi.login(email, password, rememberMe, captcha);
@@ -67,7 +82,7 @@ export const login = (email, password, rememberMe, captcha) => async (dispatch) 
             dispatch(getAuthMeThunk());
             dispatch(setError(null)); // Убираем ошибку, если вход успешен
         } else {
-            if(response.resultCode === 10){
+            if (response.resultCode === 10) {
                 dispatch(getCaptchaUrl())
             }
             const errorMessage = response.messages?.[0] || "Ошибка авторизации";
@@ -103,4 +118,11 @@ export const getCaptchaUrl = () => async (dispatch) => {
     dispatch(getCaptchaUrlSuccess(captchaUrl));
 }
 
-
+export const getMyProfile = () => async (dispatch, getState) => {
+   // debugger
+    const userId = getState().auth.id;  // используйте `id`, а не `userId`
+    if (userId) {
+        const response = await usersAPI.getProfile(userId);
+        dispatch(setMyProfile(response.data));  // обновляем профиль в стейте
+    }
+};

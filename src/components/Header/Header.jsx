@@ -13,9 +13,10 @@ export const Header = (props) => {
             <div className={s.loginBlock}>
                 {props.isAuth
                     ? <div className={s.myInfo}>
-                        <img className={s.myAvatar}
-                             src={props.profile?.photos?.large || "https://via.placeholder.com/100"}
-                             alt={"Андрей Миронов"}/>
+                        {props.profile && props.profile.photos && props.profile.photos.large
+                            ? <img className={s.myAvatar} src={props.profile.photos.large} alt="Андрей Миронов" />
+                            : <img className={s.myAvatar} src="https://via.placeholder.com/100" alt="Загрузка..." />
+                        }
                         <p>{props.login}</p>
                         <button onClick={() => props.logout()}>Log out</button>
                     </div>
