@@ -12,7 +12,8 @@ let initialState = {
     email: null,
     login: null,
     isAuth: false,
-    captchaUrl: null
+    captchaUrl: null,
+    myAvatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiA8eSX_SbVdQbhUREIQAorNgqxDeOVvXB0g&s"
 };
 
 // debugger

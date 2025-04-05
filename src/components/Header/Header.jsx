@@ -14,7 +14,7 @@ export const Header = (props) => {
                 {props.isAuth
                     ? <div className={s.myInfo}>
                         <img className={s.myAvatar}
-                             src={props.profile?.photos?.large || "https://via.placeholder.com/100"}
+                             src={props.myAvatar || "https://via.placeholder.com/100"}
                              alt={"Андрей Миронов"}/>
                         <p>{props.login}</p>
                         <button onClick={() => props.logout()}>Log out</button>
