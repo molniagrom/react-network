@@ -1,10 +1,11 @@
-import {authAPI as authAPi, securityAPI} from "../api/api";
+import {authAPI as authAPi, profileAPI, securityAPI} from "../api/api";
 
 // Делаем более уникальные actions (redux-ducks)
 
 const SET_USER_DATA = "auth/SET_USER_DATA";
 const GET_CAPTCHA_URL_SUCCESS = "auth/GET_CAPTCHA_URL_SUCCESS";
 export const SET_ERROR = 'auth/SET_ERROR';
+const SET_MY_AVATAR = "auth/SET_MY_AVATAR";
 
 
 let initialState = {
@@ -12,7 +13,9 @@ let initialState = {
     email: null,
     login: null,
     isAuth: false,
-    captchaUrl: null
+    captchaUrl: null,
+    myAvatar: null
+
 };
 
 // debugger
@@ -27,6 +30,13 @@ export const authReducer = (state = initialState, action) => {
                 ...action.payload,
             };
 
+        case SET_MY_AVATAR:
+
+            return {
+                ...state,
+                myAvatar: action.myAvatar
+            };
+
         default:
             return state;
     }
@@ -37,6 +47,10 @@ export const setAuthUserData = (userID, email, login, isAuth) => ({
     type: SET_USER_DATA,
     payload: {userID, email, login, isAuth}
 });
+
+export const setMyAvatar = (myAvatar) => (
+    {type: SET_MY_AVATAR, myAvatar}
+);
 
 export const getCaptchaUrlSuccess = (captchaUrl) => ({
     type: GET_CAPTCHA_URL_SUCCESS,
@@ -103,4 +117,12 @@ export const getCaptchaUrl = () => async (dispatch) => {
     dispatch(getCaptchaUrlSuccess(captchaUrl));
 }
 
+export const getMyAvatar = (id) => async (dispatch) => {
+
+    if (id) {
+        const response = await profileAPI.getProfile(id);
+        dispatch(setMyAvatar(response.photos.small));
+    }
+
+}
 

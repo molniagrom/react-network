@@ -11,6 +11,8 @@ import {initializeApp} from "./redux/app-reducer";
 import {Preloader} from "./components/common/Preloader/Preloader";
 import store from "./redux/redux-store";
 import {withSuspense} from "./hoc/withSuspense";
+import {getMyAvatar} from "./redux/auth-reducer";
+import {getMyUserId} from "./redux/users-selectors";
 
 const DialogsContainer = lazy(() => import("./components/Dialogs/DialogsContainer"));
 const ProfileContainer = lazy(() => import("./components/Profile/ProfileContainer"));
@@ -18,6 +20,7 @@ const UsersContainer = lazy(() => import("./components/Users/UsersContainer"));
 const Login = lazy(() => import("./components/Login/Login"));
 
 class App extends React.Component {
+    hasLoadedAvatar = false;
 
     catchAllUnhandledErrors = (promiseRejectionEvent) => {
         alert("Some error current")
@@ -28,6 +31,18 @@ class App extends React.Component {
         this.props.initializeApp();
         window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors)
     }
+
+    componentDidUpdate(prevProps) {
+        if (
+            this.props.initialized &&
+            this.props.id &&
+            !this.hasLoadedAvatar
+        ) {
+            this.props.getMyAvatar(this.props.id);
+            this.hasLoadedAvatar = true;
+        }
+    }
+
 
     componentWillUnmount() {
         window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors)
@@ -61,9 +76,11 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => ({
     initialized: state.app.initialized,
+    id: getMyUserId(state),
+
 });
 
-let AppContainer = connect(mapStateToProps, {initializeApp})(App);
+let AppContainer = connect(mapStateToProps, {initializeApp, getMyUserId, getMyAvatar})(App);
 
 let SamuraiJSApp = () => {
     return (
