@@ -1,10 +1,11 @@
-import {authAPI as authAPi, securityAPI} from "../api/api";
+import {authAPI as authAPi, profileAPI, securityAPI, usersAPi} from "../api/api";
 
 // Делаем более уникальные actions (redux-ducks)
 
 const SET_USER_DATA = "auth/SET_USER_DATA";
 const GET_CAPTCHA_URL_SUCCESS = "auth/GET_CAPTCHA_URL_SUCCESS";
 export const SET_ERROR = 'auth/SET_ERROR';
+const SET_MY_AVATAR = "auth/SET_MY_AVATAR";
 
 
 let initialState = {
@@ -13,7 +14,7 @@ let initialState = {
     login: null,
     isAuth: false,
     captchaUrl: null,
-    myAvatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiA8eSX_SbVdQbhUREIQAorNgqxDeOVvXB0g&s"
+    myAvatar: null
 };
 
 // debugger
@@ -26,6 +27,13 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ...action.payload,
+            };
+
+        case SET_MY_AVATAR:
+
+            return {
+                ...state,
+                myAvatar: action.myAvatar
             };
 
         default:
@@ -49,6 +57,10 @@ export const setError = (errorMessage) => {
         payload: errorMessage
     };
 }
+
+export const setMyAvatar = (myAvatar) => (
+    {type: SET_MY_AVATAR, myAvatar}
+);
 
 export const getAuthMeThunk = () => async (dispatch) => {
     let response = await authAPi.getMe()
@@ -103,5 +115,20 @@ export const getCaptchaUrl = () => async (dispatch) => {
     const captchaUrl = response.url
     dispatch(getCaptchaUrlSuccess(captchaUrl));
 }
+
+export const getMyAvatar = (id) => async (dispatch) => {
+
+    if (id) {
+       const response = await profileAPI.getProfile(id);
+       dispatch(setMyAvatar(response.photos.small));
+   }
+
+
+    // const response = await securityAPI.getCaptchaURL()
+    // const captchaUrl = response.url
+    // dispatch(getCaptchaUrlSuccess(captchaUrl));
+}
+
+
 
 

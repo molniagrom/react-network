@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom";
 
 export const Header = (props) => {
     // debugger
-    console.log(props.profile);
+    console.log(props.myAvatar);
     return (
         <header className={s.header}>
             <img className={s.logo}

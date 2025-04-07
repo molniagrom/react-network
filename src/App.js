@@ -11,6 +11,8 @@ import {initializeApp} from "./redux/app-reducer";
 import {Preloader} from "./components/common/Preloader/Preloader";
 import store from "./redux/redux-store";
 import {withSuspense} from "./hoc/withSuspense";
+import {getMyUserId} from "./redux/users-selectors";
+import {getMyAvatar} from "./redux/auth-reducer";
 
 const DialogsContainer = lazy(() => import("./components/Dialogs/DialogsContainer"));
 const ProfileContainer = lazy(() => import("./components/Profile/ProfileContainer"));
@@ -18,6 +20,7 @@ const UsersContainer = lazy(() => import("./components/Users/UsersContainer"));
 const Login = lazy(() => import("./components/Login/Login"));
 
 class App extends React.Component {
+    hasLoadedAvatar = false;
 
     catchAllUnhandledErrors = (promiseRejectionEvent) => {
         alert("Some error current")
@@ -26,8 +29,21 @@ class App extends React.Component {
 
     componentDidMount() {
         this.props.initializeApp();
-        window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors)
+        window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors);
     }
+
+
+    componentDidUpdate(prevProps) {
+        if (
+            this.props.initialized &&
+            this.props.id &&
+            !this.hasLoadedAvatar
+        ) {
+            this.props.getMyAvatar(this.props.id);
+            this.hasLoadedAvatar = true;
+        }
+    }
+
 
     componentWillUnmount() {
         window.removeEventListener("unhandledrejection", this.catchAllUnhandledErrors)
@@ -43,16 +59,16 @@ class App extends React.Component {
             <NavbarContainer/>
             <div className="app-wrapper-content">
                 <Routes>
-                    <Route path="/dialogs/*" element={withSuspense(DialogsContainer)()} />
-                    <Route index path="/profile/:userID?/*" element={withSuspense(ProfileContainer)()} />
-                    <Route path="/news/*" element={<News />} />
-                    <Route path="/music/*" element={<Music />} />
-                    <Route path="/users/*" element={withSuspense(UsersContainer)()} />
-                    <Route path="/login/*" element={withSuspense(Login)()} />
-                    <Route path="/settings/*" element={<Settings />} />
-                    {/*<Route path="/react-network/*" element={<Navigate to="/profile/:userID?/*" />} />*/}
-                    <Route path="*" element={<div>404 not found</div>} />
-                    <Route path="/react-network/*" element={<Navigate to="/profile/:userID?/*" />} />
+                    <Route path="/dialogs/*" element={withSuspense(DialogsContainer)()}/>
+                    <Route index path="/profile/:id?/*" element={withSuspense(ProfileContainer)()}/>
+                    <Route path="/news/*" element={<News/>}/>
+                    <Route path="/music/*" element={<Music/>}/>
+                    <Route path="/users/*" element={withSuspense(UsersContainer)()}/>
+                    <Route path="/login/*" element={withSuspense(Login)()}/>
+                    <Route path="/settings/*" element={<Settings/>}/>
+                    {/*<Route path="/react-network/*" element={<Navigate to="/profile/:id?/*" />} />*/}
+                    <Route path="*" element={<div>404 not found</div>}/>
+                    <Route path="/react-network/*" element={<Navigate to="/profile/:id?/*"/>}/>
                 </Routes>
             </div>
         </div>);
@@ -61,16 +77,17 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => ({
     initialized: state.app.initialized,
+    id: getMyUserId(state),
 });
 
-let AppContainer = connect(mapStateToProps, {initializeApp})(App);
+let AppContainer = connect(mapStateToProps, {initializeApp, getMyUserId, getMyAvatar})(App);
 
 let SamuraiJSApp = () => {
     return (
         <React.StrictMode>
             <BrowserRouter>
                 <Provider store={store}>
-                    <AppContainer />
+                    <AppContainer/>
                 </Provider>
             </BrowserRouter>
         </React.StrictMode>

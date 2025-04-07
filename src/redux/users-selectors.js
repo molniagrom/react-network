@@ -22,6 +22,14 @@ export const getIsFetching = (state) => {
 export const getFollowingInProgress = (state) => {
     return state.usersPage.followingInProgress
 }
+export const getMyUserId = (state) => {
+ // debugger
+    if (state.profilePage.profile){
+        return state.profilePage.profile.userId
+    } else if (!state.profilePage.profile) {
+        return null
+    }
+}
 
 // Example to reselect
 
