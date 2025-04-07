@@ -15,7 +15,7 @@ import {getMyAvatar} from "./redux/auth-reducer";
 import {getMyUserId} from "./redux/users-selectors";
 
 const DialogsContainer = lazy(() => import("./components/Dialogs/DialogsContainer"));
-const ProfileContainer = lazy(() => import("./components/Profile/ProfileContainer"));
+const ProfileContainerWrapper = lazy(() => import("./components/Profile/ProfileContainer"));
 const UsersContainer = lazy(() => import("./components/Users/UsersContainer"));
 const Login = lazy(() => import("./components/Login/Login"));
 
@@ -59,7 +59,7 @@ class App extends React.Component {
             <div className="app-wrapper-content">
                 <Routes>
                     <Route path="/dialogs/*" element={withSuspense(DialogsContainer)()} />
-                    <Route index path="/profile/:userID?/*" element={withSuspense(ProfileContainer)()} />
+                    <Route path="/profile/:userID?/*" element={withSuspense(ProfileContainerWrapper)()} />
                     <Route path="/news/*" element={<News />} />
                     <Route path="/music/*" element={<Music />} />
                     <Route path="/users/*" element={withSuspense(UsersContainer)()} />
