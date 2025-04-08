@@ -7,16 +7,16 @@ class HeaderContainer extends React.Component {
 
     render() {
         return (
-            <Header {...this.props} profile={this.props.profile}/>
+            <Header {...this.props} myAvatar={this.props.myAvatar}/>
         )
     }
 }
-// debugger
+
 const mapStateToProps = (state) => ({
     isAuth: state.auth.isAuth,
     email: state.auth.email,
     login: state.auth.login,
-    profile: state.auth.myProfile,
+    myAvatar: state.auth.myAvatar,
 })
 
 export default connect(mapStateToProps, {logout}) (HeaderContainer);

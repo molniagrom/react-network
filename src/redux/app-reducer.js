@@ -24,8 +24,7 @@ export const initializedSuccess = () => ({type: INITIALIZED_SUCCESS});
 
 export const initializeApp = () => (dispatch) => {
     let promise = dispatch(getAuthMeThunk())
-
-    return Promise.all([promise])
+   return Promise.all([promise])
         .then(() => {
             dispatch(initializedSuccess())
         })
