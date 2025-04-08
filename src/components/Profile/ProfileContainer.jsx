@@ -1,80 +1,67 @@
-// ProfileContainer.jsx
 import React from "react";
-import { Profile } from "./Profile";
-import { connect } from "react-redux";
-import {
-    getProfile,
-    getStatus,
-    savePhoto,
-    setUserProfile,
-    upDateStatus,
-    saveProfile
-} from "../../redux/profile-reduser";
-import { Navigate, useParams } from "react-router-dom";
-import { withAuthRedirect } from "../../hoc/withAuthRedirect";
-import { compose } from "redux";
+import {Profile} from "./Profile";
+import {connect} from "react-redux";
+import {getProfile, getStatus, savePhoto, setUserProfile, upDateStatus, saveProfile} from "../../redux/profile-reduser";
+import {Navigate, useParams} from "react-router-dom";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
-// Классовый компонент
 class ProfileContainer extends React.Component {
-    refreshProfile() {
-        // userID из параметров URL или из авторизации
-        const userID = this.props.authUserID;
-        // debugger
-        this.props.getProfile(userID);
-        this.props.getStatus(userID);
+
+    refreshProfile(){
+        this.props.getProfile(this.props.userID)
+        this.props.getStatus(this.props.userID)
     }
 
     componentDidMount() {
-        this.refreshProfile();
+        this.refreshProfile()
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.userID !== prevProps.userID) {
-            this.refreshProfile();
+            this.refreshProfile()
         }
     }
 
     render() {
-        // Если не авторизован — редирект
+
         if (!this.props.isAuth) return <Navigate to="/login" />;
 
         return (
-            <Profile
-                savePhoto={this.props.savePhoto}
-                isOwner={!this.props.userID} // если userID нет — это профиль текущего пользователя
-                {...this.props}
-                profile={this.props.profile}
-                status={this.props.status}
-                upDateStatus={this.props.upDateStatus}
-            />
-        );
+            <div>
+                <Profile
+                    savePhoto={this.props.savePhoto}
+                    isOwner={!this.props.userID}
+                    {...this.props}
+                    error={this.props.error}
+                    profile={this.props.profile}
+                    status={this.props.status}
+                    upDateStatus={this.props.upDateStatus}/>
+            </div>
+        )
     }
 }
 
-// Функциональная обёртка, получающая userID из URL
-function ProfileContainerWrapper(props) {
+function ProfileContainerUseParams(props) {
     const { userID } = useParams();
     return <ProfileContainer {...props} userID={userID} />;
 }
 
-// Подключение Redux
-const mapStateToProps = (state) => ({
-    profile: state.profilePage.profile,
-    status: state.profilePage.status,
-    authUserID: state.auth.userID,
-    error: state.profilePage.error,
-    isAuth: state.auth.isAuth,
-});
+function ProfileContainerWrapper(props) {
+    return <ProfileContainerUseParams {...props} />;
+}
 
-// Экспорт с авторизацией и Redux
+let mapStateToProps = (state) => {
+    return ({
+        profile: state.profilePage.profile,
+        status: state.profilePage.status,
+        authUserID: state.auth.userID,
+        error: state.profilePage.error,
+    })
+
+}
+
 export default compose(
-    connect(mapStateToProps, {
-        setUserProfile,
-        getProfile,
-        getStatus,
-        upDateStatus,
-        savePhoto,
-        saveProfile
-    }),
+    connect(mapStateToProps, {setUserProfile, getProfile, getStatus, upDateStatus, savePhoto, saveProfile}),
     withAuthRedirect
-)(ProfileContainerWrapper);
+)(ProfileContainerWrapper)
